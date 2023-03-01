@@ -168,7 +168,7 @@ public class Menu extends JPanel {
         buttonLancer = new JButton("Lancer");
         buttonArreter = new JButton("Arreter");
         tauxPanel = new JPanel();
-        tauxTitre = new JLabel(taux_foret_brulee+"%");
+        tauxTitre = new JLabel(taux_foret_brulee+" %");
         titreVide = new JLabel();
         legendePanel = new JPanel();
         solNuPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -314,7 +314,6 @@ public class Menu extends JPanel {
         buttonLancer.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 app.lancerSimulation();
-                upDate_Taux_foret_brulee();
             }
         });
 
@@ -473,8 +472,6 @@ public class Menu extends JPanel {
      * Tant que le programme n'est pas fini, on continuera a mettre a jour.
      */
     public void upDate_Taux_foret_brulee() {
-        while (app.getStopSimulation()==false){
-            taux_foret_brulee = app.getTaux_foret_deja_brulee();
-        }
+        tauxTitre.setText(app.getTaux_foret_deja_brulee()+" %");
     }
 }

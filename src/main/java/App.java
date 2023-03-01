@@ -4,7 +4,6 @@ import java.awt.*;
 public class App extends JFrame {
     private int min_width ; //largeur minimale de la fenêtre
     private int min_height ; // hauteur minimale de la fenêtre
-    private String title ; //titre de la fenêtre
     private Grille grille ; //c’est la grille qui modélise la forêt
     private Menu menu ; //c’est le panneau contenant le menu de l’application
     private int densite; //densite des arbre dans la forêt en pourcentage
@@ -68,9 +67,6 @@ public class App extends JFrame {
     }
     public void setStopSimulation(boolean var){
         stopSimulation = var;
-    }
-    public boolean getStopSimulation(){
-        return stopSimulation;
     }
     public int getTaux_foret_deja_brulee() {
         return taux_foret_deja_brulee;
