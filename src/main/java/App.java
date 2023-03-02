@@ -43,7 +43,7 @@ public class App extends JFrame {
         this.setMinimumSize(new Dimension(min_width, min_height));
         this.setLocation(0, 0);
         this.setTitle("Simulation Feu de Foret");
-        ImageIcon img = new ImageIcon("D:\\haddo\\Documents\\info\\JavaProjects\\Simulation_Feu_de_Foret\\design\\icone.png"); //Icone fenetre (corner gauche)
+        ImageIcon img = new ImageIcon("design/icone.png"); //Icone fenetre (corner gauche)
         this.setIconImage(img.getImage());
         this.setAlwaysOnTop(false);
         this.setResizable(true);
