@@ -1,2 +1,4 @@
-public class Grille {
+import javax.swing.*;
+
+public class Grille extends JPanel {
 }
