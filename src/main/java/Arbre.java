@@ -9,8 +9,8 @@ public class Arbre extends Cellule {
     private final static String COULEUR_PEU_INFLAMMABLE="#0474BC";
     private boolean sol_humide;
     private boolean arbre_peu_inflammable;
-    public Arbre( int largeur, int hauteur, int x, int y, Grille grille, Boolean sol_humide, Boolean arbre_peu_inflammable){
-        super(largeur, hauteur,x, y, grille);
+    public Arbre(  int x, int y, Grille grille, Boolean sol_humide, Boolean arbre_peu_inflammable){
+        super(x, y, grille);
         this.setSolHumide(sol_humide);
         this.setArbrePeuInflammable(arbre_peu_inflammable);
         this.etat=1;
