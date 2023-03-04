@@ -6,14 +6,14 @@ public class TestArbre {
 
     @Test
     public void testSolEstHumide(){
-        Arbre arbre = new Arbre(10, 10, 5, 5, new Grille(new App()), true, false);
+        Arbre arbre = new Arbre(10, 10, new Grille(new App()), true, false);
         assertThat(arbre.solEstHumide()).isEqualTo(true);
-        arbre = new Arbre(10, 10, 5, 5, new Grille(new App()), false, false);
+        arbre = new Arbre(10, 10, new Grille(new App()), false, false);
         assertThat(arbre.solEstHumide()).isEqualTo(false);
     }
     @Test
     public void testSetSolHumide(){
-        Arbre arbre = new Arbre(10, 10, 5, 5, new Grille(new App()), true, false);
+        Arbre arbre = new Arbre(10, 10,  new Grille(new App()), true, false);
         arbre.setSolHumide(true);
         assertThat(arbre.solEstHumide()).isEqualTo(true);
         arbre.setSolHumide(false);
@@ -21,14 +21,14 @@ public class TestArbre {
     }
     @Test
     public void testArbreEstPeuInflammable(){
-        Arbre arbre = new Arbre(10, 10, 5, 5, new Grille(new App()), false, true);
+        Arbre arbre = new Arbre(10, 10,  new Grille(new App()), false, true);
         assertThat(arbre.arbreEstPeuInflammable()).isEqualTo(true);
-        arbre = new Arbre(10, 10, 5, 5, new Grille(new App()), false, false);
+        arbre = new Arbre(10, 10,  new Grille(new App()), false, false);
         assertThat(arbre.arbreEstPeuInflammable()).isEqualTo(false);
     }
     @Test
     public void testSetArbreEstPeuInflammable(){
-        Arbre arbre = new Arbre(10, 10, 5, 5, new Grille(new App()), true, false);
+        Arbre arbre = new Arbre(10, 10,  new Grille(new App()), true, false);
         arbre.setArbrePeuInflammable(true);
         assertThat(arbre.arbreEstPeuInflammable()).isEqualTo(true);
         arbre.setArbrePeuInflammable(false);
@@ -37,7 +37,7 @@ public class TestArbre {
 
     @Test
     public void testBasculer(){
-        Arbre arbre = new Arbre(10, 10, 5, 5, new Grille(new App()), true, false);
+        Arbre arbre = new Arbre(10, 10,  new Grille(new App()), true, false);
         arbre.etat=1;
         arbre.etat_futur=2;
         arbre.basculer();
@@ -46,10 +46,10 @@ public class TestArbre {
     @Test
     public void testCalculeEtatFuture_arbreEnVie() {
         Grille grille = new Grille(new App());
-        Arbre arbre1 = new Arbre(10, 10, 5, 5, grille, false, false);
-        Arbre arbre2 = new Arbre(10, 10, 5, 5, grille, false, false);
-        Arbre arbre3 = new Arbre(10, 10, 5, 5, grille, false, false);
-        Arbre arbre4 = new Arbre(10, 10, 5, 5, grille, false, false);
+        Arbre arbre1 = new Arbre(10, 10,  grille, false, false);
+        Arbre arbre2 = new Arbre(10, 10,  grille, false, false);
+        Arbre arbre3 = new Arbre(10, 10,  grille, false, false);
+        Arbre arbre4 = new Arbre(10, 10,  grille, false, false);
         arbre1.etat=1;
         arbre2.etat=1;
         arbre3.etat=1;
@@ -66,7 +66,7 @@ public class TestArbre {
     @Test
     public void testCalculeEtatFuture_arbreEnFeu() {
         Grille grille = new Grille(new App());
-        Arbre arbre = new Arbre(10, 10, 5, 5, grille, true, false);
+        Arbre arbre = new Arbre(10, 10,  grille, true, false);
         arbre.etat=2;
         arbre.calculeEtatFuture();
         assertThat(arbre.getEtatFutur()).isEqualTo(3);
@@ -75,7 +75,7 @@ public class TestArbre {
     @Test
     public void testCalculeEtatFuture_arbreEnCendre() {
         Grille grille = new Grille(new App());
-        Arbre arbre = new Arbre(10, 10, 5, 5, grille, true, false);
+        Arbre arbre = new Arbre(10, 10,  grille, true, false);
         arbre.etat=3;
         arbre.calculeEtatFuture();
         assertThat(arbre.getEtatFutur()).isEqualTo(3);
@@ -84,7 +84,7 @@ public class TestArbre {
     private int simulerPropagationFeu(int nArbre,boolean sol_humide,boolean arbre_peu_inflammable, Cellule [] voisins,String direction_vent,String saison){
         int compteurArbreEnfeu=0;
         for(int i=1; i<=nArbre;i++){
-            Arbre arbre = new Arbre(10, 10, 5, 5, new Grille(new App()), sol_humide, arbre_peu_inflammable);
+            Arbre arbre = new Arbre(10, 10,  new Grille(new App()), sol_humide, arbre_peu_inflammable);
             arbre.grille.app.saison=saison;
             arbre.grille.app.direction_vent=direction_vent;
             arbre.setVoisins(voisins);
