@@ -1,12 +1,15 @@
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.Random;
 
 
 /**
- * Cette classe est une extension de la classe JPannel de Java. Elle permet d’implémenter la grille sur laquelle se déroulera la simulation.
+ * Cette classe est une extension de la classe JPanel de Java. Elle permet d’implémenter la grille sur laquelle se déroulera la simulation.
  */
 public class Grille extends JPanel {
+    /** Représente la couleur de fond de la grille. */
+    public static final String COULEUR_FOND_GRILLE = "#F5F5F5";
     /** Représente le nombre de lignes de la grille */
     private int nb_lignes;
     /** Représente le nombre de colonnes de la grille. */
@@ -18,7 +21,7 @@ public class Grille extends JPanel {
      * Constructeur de la classe qui crée une nouvelle instance de Grille.
      */
     public Grille(){
-        // Appeler le constructeur de JPannel
+        // Appeler le constructeur de JPanel
         super();
     }
 
@@ -61,7 +64,7 @@ public class Grille extends JPanel {
      * @param j La colonne de la cellule.
      * @return True si la cellule (i, j) est dans la grille et False sinon
      */
-    private boolean dansGrille(int i, int j){
+    public boolean dansGrille(int i, int j){
         return i < this.nb_lignes && i >= 0 && j < this.nb_colonnes && j >= 0;
     }
 
@@ -154,8 +157,9 @@ public class Grille extends JPanel {
         this.nb_colonnes = nbColonnes;
 
         // Définir la disposition de la grille
-        GridLayout layout = new GridLayout(nbLignes, nbColonnes);
+        GridLayout layout = new GridLayout(nbLignes, nbColonnes, 0, 0);
         this.setLayout(layout);
+        this.setBackground(Color.decode(COULEUR_FOND_GRILLE));
 
         // Variable aléatoire utilisé pour respecter les proportions (densité, taux cellules humides, taux d'arbres peu inflammables)
         Random random = new Random();
@@ -167,9 +171,8 @@ public class Grille extends JPanel {
             for(int j = 0; j < nbColonnes; j++){
                 // Créer un arbre ou un sol nu en fonction de la densité de la grille
                 if(random.nextDouble() <= (double) densite/100){
-                    // Créer un arbre, affecter ses voisins et insérer l'arbre dans la grille.
-                    Arbre arbre = new Arbre(i, j, this);
-                    arbre.setVoisins(this.calculeVoisins(i, j));
+                    // Créer un arbre, et l'insérer dans la grille.
+                    Arbre arbre = new Arbre(i, j, this, false, false);
                     this.setCellule(i, j, arbre);
 
                     // Arbre sur sol humide
@@ -184,6 +187,51 @@ public class Grille extends JPanel {
                     solNu.setVoisins(this.calculeVoisins(i, j));
                     this.setCellule(i, j, solNu);
                 }
+            }
+        }
+
+        // Affectation des voisins de chaque cellule
+        for(int i = 0; i < nbLignes; i++) {
+            for (int j = 0; j < nbColonnes; j++) {
+                Cellule cellule = this.getCellule(i, j);
+                cellule.setVoisins(this.calculeVoisins(i, j));
+            }
+        }
+    }
+
+    /**
+     * Méthode qui passe en revue toutes les cellules de la grille et calcule leur état futur.
+     * Elle retourne un array de deux entiers, le premier contiendra 0 si on doit arrêter la simulation (il n’y a plus d’arbres en feu) et 1 sinon.
+     * Le second contiendra le pourcentage de la forêt déjà brulée.
+     *
+     * @return [a, b] ; a = 0 s'il n'y a plus d'arbre en feu et a = 1 sinon ; b = pourcentage forêt déjà brulée.
+     */
+    public double[] simulation(String direction_vent, String saison){
+        double continuerSimulation = 0;
+        double nombreTotalArbre = 0;
+        double nombreArbreEnCendre = 0;
+
+        for(int i = 0; i < this.nb_lignes; i++) {
+            for( int j = 0; j < this.nb_colonnes; j++) {
+                Cellule cellule = this.getCellule(i, j);
+                cellule.calculeEtatFutur(direction_vent, saison);
+                if(cellule.getEtatFutur() == 2) continuerSimulation = 1;
+                if(cellule.getEtat() == 1 || cellule.getEtat() == 2 || cellule.getEtat() == 3) nombreTotalArbre += 1;
+                if(cellule.getEtat() == 3 || cellule.getEtatFutur() == 3) nombreArbreEnCendre += 1;
+            }
+        }
+
+        return new double[]{continuerSimulation, ((nombreArbreEnCendre/nombreTotalArbre)*100)};
+    }
+
+    /**
+     * Méthode qui permet de basculer toutes les cellules de la grille dans leur état futur.
+     */
+    public void actualiser(){
+        for(int i = 0; i < this.nb_lignes; i++) {
+            for( int j = 0; j < this.nb_colonnes; j++) {
+                Cellule cellule = this.getCellule(i, j);
+                cellule.basculer();
             }
         }
     }

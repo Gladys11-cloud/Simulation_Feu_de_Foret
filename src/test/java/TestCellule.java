@@ -83,11 +83,9 @@ public class TestCellule {
     }
 
     /**
-     * Méthode de test qui s'assure que la cellule s'affiche correctement dans une fenêtre.
+     * Méthode main qui s'assure que la cellule s'affiche correctement dans une fenêtre.
      */
-    @Test
-    public void testCellule_Affichage (){
-
+    public static void main(String[] args){
         // Création de la grille
         Grille grille = new Grille();
         Cellule cellule = new Cellule(1, 0, grille){

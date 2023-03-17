@@ -1,477 +1,740 @@
+import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.plaf.metal.MetalButtonUI;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 
+/**
+ * Cette classe est une extension de JPanel. Elle contient tous les composants graphiques
+ * (Boutons, etc.) permettant de configurer la grille et de lancer la simulation.
+ */
 public class Menu extends JPanel {
-    private App app;
-    private final static String COULEUR_BOUTON_GENERER = "#47B9F3"; // couleur en hexadecimal du bouton « Générer ».
-    private final static String COULEUR_BOUTON_LANCER = "#47F3A0"; // couleur en hexadecimal du bouton « Lancer ».
-    private final static String COULEUR_BOUTON_ARRETER = "#FD0E0E"; // couleur en hexadecimal du bouton « Arrêter ».
-    private final static String COULEUR_CHAMP_DE_TEXTE = "#E6E6E6"; // couleur en hexadecimal des champs de texte qui permettent
-    // à l’utilisateur de faire des choix (JSpinner).
-    private final static String COULEUR_SEPARATIONS = "#CBC4C4"; // couleur en hexadecimal des lignes de séparation.
-    private final static String COULEUR_POURC_FORET_BRULEE = "#FF9620"; // couleur en hexadecimal d’affichage du pourcentage de la forêt brulée.
-    private final static String COULEUR_BACKGROUND_ET_TEXT_BOUTTON = "#FCFCFC"; //Couleur fond menu et des textes dans les boutons
-    private final static String COULEUR_SOL_NU = "#FFDCB5";
-    private final static String COULEUR_ARBRE_EN_VIE = "#7CEA4F";
-    private final static String COULEUR_ARBRE_EN_FEU = "#FFA703";
-    private final static String COULEUR_ARBRE_EN_CENDRE = "#C3C3C3";
-    private final static String COULEUR_ARBRE_SUR_SOL_HUMIDE= "#009719";
-    private final static String COULEUR_ARBRE_PEU_INFLAMMABLE = "#FFFFFF";
-    private int taux_foret_brulee;
-    private Font police;
-    private Font policeTaux;
-    private Font policeSpinner;
-    private Box menuComposantes;
-    private JPanel configPanel; //Panel partie config
-    private JLabel configTitre;//Le label "Configurer la fenetre"
-    private SpinnerModel model_Spinner_Colonne;//Modele des files deroulantes pour colonne
-    private SpinnerModel model_Spinner_Ligne;//Modele des files deroulantes pour lignes
-    private SpinnerModel model_densite;//Modele file deroulante pourcentage densite
-    private SpinnerModel model_humidite;//Modele file deroulante pourcentage humidite
-    private SpinnerModel model_inflammable;//Modele file deroulante pourcentage inflammable
-    private SpinnerModel model_Spinner_CDirVent;
-    private String directions[];//les 4 directions
-    private SpinnerModel model_Spinner_Saison;
-    private String saisons[];//les 4 saisons
-    private JPanel spinnerColonnePanel;//Panel qui contient la ligne grahpique du spinner colonne
-    private JLabel colonneLabel;
-    private JSpinner colonneSpinner;
-    private JPanel spinnerLignePanel;//Panel qui contient la ligne graphique du spinner colonne
-    private JLabel ligneLabel;
-    private JSpinner ligneSpinner;
-    private JPanel spinnerDensitePanel;//Panel qui contient la ligne graphique du spinner Densite
-    private JLabel densiteLabel;
+    /** Contient la référence de l’instance d'App dans laquelle se trouve le menu. */
+    private final App app;
+    /** Couleur en hexadecimal du bouton « Générer » lorsqu'il est actif. */
+    private final static String COULEUR_BOUTON_GENERER_ACTIF = "#007FFF";
+    /** Couleur en hexadecimal du bouton « Générer » lorsqu'il n'est pas actif. */
+    private final static String COULEUR_BOUTON_GENERER_NON_ACTIF = "#7AB9FA";
+    /** Couleur en hexadecimal du bouton « Lancer » lorsqu'il est actif. */
+    private final static String COULEUR_BOUTON_LANCER_ACTIF = "#1DA15D";
+    /** Couleur en hexadecimal du bouton « Lancer » lorsqu'il n'est pas actif. */
+    private final static String COULEUR_BOUTON_LANCER_NON_ACTIF = "#88CAA8";
+    /** Couleur en hexadecimal du bouton « Arrêter » lorsqu'il est actif. */
+    private final static String COULEUR_BOUTON_ARRETER_ACTIF = "#FC1C2C";
+    /** Couleur en hexadecimal du bouton « Arrêter » lorsqu'il n'est pas actif. */
+    private final static String COULEUR_BOUTON_ARRETER_NON_ACTIF = "#F88890";
+    /** Couleur en hexadecimal des champs de texte qui permettent à l’utilisateur de faire des choix (JSpinner). */
+    private final static String COULEUR_BACKGROUND_CHAMP_DE_TEXTE = "#EEECEC";
+    /** Couleur en hexadecimal des champs de texte qui permettent à l’utilisateur de faire des choix (JSpinner). */
+    private final static String COULEUR_CHAMP_DE_TEXTE = "#606060";
+    /** Couleur en hexadecimal des lignes de séparation. */
+    private final static String COULEUR_SEPARATIONS = "#D9D9D9";
+    /** Couleur en hexadecimal d’affichage du pourcentage de forêt brulée. */
+    private final static String COULEUR_POURC_FORET_BRULEE = "#F3770F";
+    /** Couleur de fond du menu */
+    private final static String COULEUR_BACKGROUND_MENU = "#F5F5F5";
+    /** Couleur du texte des boutons */
+    private final static String COULEUR_TEXTE_BOUTONS = "#FFFFFF";
+    /** Police utilisée pour les titres dans le menu. */
+    private final static Font policeTitres = new Font("Arial", Font.PLAIN, 15);
+    /** Police utilisée dans les champs de texte et la légende. */
+    private final static Font policeSpinnerEtLegende = new Font("Verdana", Font.PLAIN, 10);
+    /** Police utilisée pour le texte des boutons. */
+    private final static Font policeButton = new Font("Verdana", Font.PLAIN, 15);
+    /** Police utilisée pour le taux de forêt déjà brulée. */
+    private final static Font policeTauxForetDejaBrulee = new Font("Verdana", Font.BOLD, 12);
+    /** Panneau utilisé dans le menu pour configurer et lancer la simulation. */
+    private final JPanel northAreaMenu;
+    /** Panneau utilisé dans le menu pour contenir le taux de forêt déjà brulée et la légende de la grille. */
+    private final JPanel southAreaMenu;
+    /** Champs de texte permettant à l'utilisateur de configurer le nombre de colonnes de la grille. */
+    private JSpinner colonnesSpinner;
+    /** Champs de texte permettant à l'utilisateur de configurer le nombre de lignes de la grille. */
+    private JSpinner lignesSpinner;
+    /** Champs de texte permettant à l'utilisateur de configurer la densité en arbres de la grille. */
     private JSpinner densiteSpinner;
-    private JPanel spinnerHumiditePanel;//Panel qui contient la ligne graphique du spinner humidite
-    private JLabel humiditeLabel;
-    private JSpinner humiditeSpinner;
-    private JPanel spinnerInflammablePanel;//Panel qui contient la ligne graphique du spinner inflammable
-    private JLabel inflammableLabel;
-    private JSpinner inflammableSpinner;
+    /** Champs de texte permettant à l'utilisateur de configurer la quantité d'arbres sur sol humide de la grille. */
+    private JSpinner tauxHumiditeSpinner;
+    /** Champs de texte permettant à l'utilisateur de configurer la quantité d'arbres à faible inflammabilité de la grille. */
+    private JSpinner tauxArbresPeuInflammableSpinner;
+    /** Bouton qui permet de générer une nouvelle grille en prenant en compte les paramètres saisis par l'utilisateur. */
     private JButton buttonGenerer;
-    private JPanel facteursPanel; //Panel partie facteurs externes
-    private JLabel facteursTitre;//Le label "Facteurs Externes"
-    private JPanel spinnerDirVentPanel;//Panel qui contient la ligne graphique du spinner Direction vent
-    private JLabel dirVentLabel;
-    private JSpinner dirVentSpinner;
-    private JPanel spinnerSaisonPanel;//Panel qui contient la ligne graphique du spinner saison
-    private JLabel saisonLabel;
+    /** Champs de texte permettant à l'utilisateur de choisir la direction du vent à considérer lors de la simulation. */
+    private JSpinner directionVentSpinner;
+    /** Champs de texte permettant à l'utilisateur de choisir la saison à considérer lors de la simulation. */
     private JSpinner saisonSpinner;
-    private JPanel simulerPanel; //Panel partie Simuler
-    private JLabel simulerTitre;//Le label "Simuler"
+    /** Bouton qui permet de lancer la simulation du feu de forêt. */
     private JButton buttonLancer;
+    /** Bouton qui permet d'arrêter ou mettre en pause la simulation du feu de forêt. */
     private JButton buttonArreter;
-    private JPanel tauxPanel; //Panel partie suivi pourcentage foret brulee
-    private JLabel tauxTitre;//Le label pour afficher le pourcentage
-    private JLabel titreVide;//Le label pour afficher le pourcentage
-    private JPanel legendePanel;
-    private JPanel solNuPanel;
-    private JLabel solNuCodeCouleur;
-    private JLabel solNu;
-    private JPanel arbreViePanel;
-    private JLabel arbreVieCouleur;
-    private JLabel arbreVie;
-    private JPanel arbreFeuPanel;
-    private JLabel arbreFeuCouleur;
-    private JLabel arbreFeu;
-    private JPanel arbreCendrePanel;
-    private JLabel arbreCendreCouleur;
-    private JLabel arbreCendre;
-    private JPanel arbreSolHumidePanel;
-    private JLabel arbreSolHumideCouleur;
-    private JLabel arbreSolHumide;
-    private JPanel arbreInflammablePanel;
-    private JLabel arbreInflammableCouleur;
-    private JLabel arbreInflammable;
+    JLabel tauxTitre;
+
+    /**
+     * Constructeur de la classe Menu qui crée une nouvelle instance de Menu
+     *
+     * @param app La référence de l’instance d'App dans laquelle se trouve le menu.
+     */
     public Menu(App app) {
-        //initiallisation
+        this.setLayout(new BorderLayout(10, 0));
         this.app = app;
-        this.setBackground(Color.decode(COULEUR_BACKGROUND_ET_TEXT_BOUTTON));
-        this.setMaximumSize(new Dimension(250, 3000));
-        //Seul la bordure gauche est visible :
+        this.setBackground(Color.decode(COULEUR_BACKGROUND_MENU));
+        this.setPreferredSize(new Dimension(250, app.getHeight()));
+        this.tauxTitre = new JLabel();
+        // Seul la bordure gauche du menu est visible
         this.setBorder(new MatteBorder(0, 1, 0, 0, Color.decode(COULEUR_SEPARATIONS)));
-        //Comportement des objects a l'interieur de Menu :
-        menuComposantes = Box.createVerticalBox();
-        this.add(menuComposantes);
-        //les polices d'ecriture
-        police = new Font("Arial", Font.BOLD, 10);
-        policeSpinner = new Font("Verdana", Font.PLAIN, 10);
-        policeTaux = new Font("Verdana", Font.PLAIN, 15);
 
-        taux_foret_brulee = 0;
-        //Les composantes de l'interface
-        configPanel = new JPanel();
-        configTitre = new JLabel("Configurer la foret");
-        model_Spinner_Colonne = new SpinnerNumberModel(
-                50, //valeur initiale
-                20, //valeur minimum
-                100, //valeur maximum
-                10 //pas
-        );
-        spinnerColonnePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        colonneLabel = new JLabel();
-        colonneSpinner = new JSpinner(model_Spinner_Colonne);
-        model_Spinner_Ligne = new SpinnerNumberModel(
-                50, //valeur initiale
-                20, //valeur minimum
-                100, //valeur maximum
-                10 //pas
-        );
-        spinnerLignePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        ligneLabel = new JLabel();
-        ligneSpinner = new JSpinner(model_Spinner_Ligne);
-        model_densite= new SpinnerNumberModel(
-                50, //valeur initiale
-                10, //valeur minimum
-                100, //valeur maximum
-                5 //pas
-        );
-        spinnerDensitePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        densiteLabel = new JLabel();
-        densiteSpinner = new JSpinner(model_densite);
-        model_humidite= new SpinnerNumberModel(
-                50, //valeur initiale
-                10, //valeur minimum
-                100, //valeur maximum
-                5 //pas
-        );
-        spinnerHumiditePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        humiditeLabel = new JLabel();
-        humiditeSpinner = new JSpinner(model_humidite);
-        model_inflammable= new SpinnerNumberModel(
-                50, //valeur initiale
-                10, //valeur minimum
-                100, //valeur maximum
-                5 //pas
-        );
-        spinnerInflammablePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        inflammableLabel = new JLabel();
-        inflammableSpinner = new JSpinner(model_inflammable);
-        buttonGenerer = new JButton("Generer");
-        facteursPanel = new JPanel();
-        facteursTitre = new JLabel("Facteurs externe");
-        directions = new String[] {"NORD", "WEST", "EST", "SUD"};
-        model_Spinner_CDirVent = new SpinnerListModel(directions);
-        spinnerDirVentPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        dirVentLabel = new JLabel();
-        dirVentSpinner = new JSpinner(model_Spinner_CDirVent);
-        saisons = new String[] {"PRINTEMPS", "ETE", "AUTOMNE", "HIVER"};
-        model_Spinner_Saison = new SpinnerListModel(saisons);
-        spinnerSaisonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        saisonLabel = new JLabel();
-        saisonSpinner = new JSpinner(model_Spinner_Saison);
-        simulerPanel = new JPanel();
-        simulerTitre = new JLabel("Simuler");
-        buttonLancer = new JButton("Lancer");
-        buttonArreter = new JButton("Arreter");
-        tauxPanel = new JPanel();
-        tauxTitre = new JLabel(taux_foret_brulee+" %");
-        titreVide = new JLabel();
-        legendePanel = new JPanel();
-        solNuPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        solNuCodeCouleur = new JLabel();
-        solNu = new JLabel("Sol nu");
-        arbreFeuPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        arbreFeuCouleur = new JLabel();
-        arbreFeu = new JLabel("Arbre en feu");
-        arbreViePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        arbreVieCouleur = new JLabel();
-        arbreVie = new JLabel("Arbre en vie");
-        arbreCendrePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        arbreCendreCouleur = new JLabel();
-        arbreCendre = new JLabel("Arbre en cendre");
-        arbreSolHumidePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        arbreSolHumideCouleur = new JLabel();
-        arbreSolHumide = new JLabel("Arbre sur sol humide");
-        arbreInflammablePanel= new JPanel(new FlowLayout(FlowLayout.LEFT));
-        arbreInflammableCouleur = new JLabel();
-        arbreInflammable = new JLabel("Arbre peu inflammable");
+        // Configuration des conteneurs du menu
+        northAreaMenu = new JPanel();
+        northAreaMenu.setOpaque(false);
+        northAreaMenu.setPreferredSize(new Dimension(this.getWidth(), 450));
+        JScrollPane northAreaMenuScrollPane = new JScrollPane(northAreaMenu);
+        northAreaMenuScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        northAreaMenuScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        northAreaMenuScrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+        northAreaMenuScrollPane.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+        northAreaMenuScrollPane.getHorizontalScrollBar().setUI(new CustomScrollBarUI());
+        northAreaMenuScrollPane.getHorizontalScrollBar().setUnitIncrement(10);
+        northAreaMenuScrollPane.getVerticalScrollBar().setUnitIncrement(10);
+        northAreaMenuScrollPane.setOpaque(false);
+        northAreaMenuScrollPane.getViewport().setOpaque(false);
 
-        //Creation des parties de l'inteface Menu
+        southAreaMenu = new JPanel();
+        southAreaMenu.setOpaque(false);
+
+        // Ajout des composantes du menu
         partieConfig();
-        partieFacteurs();
+        partieFacteursExternes();
         partieSimuler();
         partieTaux();
         partieLegende();
 
+        // Ajout des conteneurs du menu
+        this.add(northAreaMenuScrollPane, BorderLayout.CENTER);
+        this.add(southAreaMenu, BorderLayout.SOUTH);
     }
 
     /**
      * methode qui gere la creation de la partie configuration du menu
      */
     private void partieConfig() {
-        //Titre
-        configTitre.setFont(police);
-        configTitre.setPreferredSize(new Dimension(150, 10));
+        JPanel configPanel = new JPanel(new BorderLayout(0,6));
+        configPanel.setOpaque(false);
+
+        // Titre de la partie configurer la forêt
+        JLabel configTitre = new JLabel("Configurer la foret");
+        configTitre.setFont(policeTitres);
+        configTitre.setPreferredSize(new Dimension(220, 25));
         configTitre.setHorizontalAlignment(JLabel.LEFT);
-        configTitre.setBorder(new MatteBorder(0, 0, 1, 0, Color.BLACK));
+        configTitre.setBorder(new MatteBorder(0, 0, 1, 0, Color.decode(COULEUR_SEPARATIONS)));
+        configPanel.add(configTitre, BorderLayout.NORTH);
 
-        //Spinner Colonne et ligne
-        colonneLabel.setFont(policeSpinner);
-        colonneLabel.setText("colonnes");
-        spinnerColonnePanel.add(colonneSpinner);
-        spinnerColonnePanel.add(colonneLabel);
-        spinnerColonnePanel.setBackground(Color.decode(COULEUR_CHAMP_DE_TEXTE));
+        // Spinners pour récupérer des valeurs à l'utilisateur
+        JPanel spinnersPanel = new JPanel(new GridLayout(4, 1,0,3));
+        spinnersPanel.setOpaque(false);
 
-        ligneLabel.setFont(policeSpinner);
-        ligneLabel.setText("lignes");
-        spinnerLignePanel.add(ligneSpinner);
-        spinnerLignePanel.add(ligneLabel);
-        spinnerLignePanel.setBackground(Color.decode(COULEUR_CHAMP_DE_TEXTE));
+        // Lignes et colonnes
+        this.lignesSpinner = new JSpinner(new SpinnerNumberModel(50, 1, 100, 1));
+        ((JSpinner.DefaultEditor) lignesSpinner.getEditor()).getTextField().setFormatterFactory(new MyIntegerFormatterFactory("", " lignes", 1, 100));
+        this.colonnesSpinner = new JSpinner(new SpinnerNumberModel(50, 1, 100, 1));
+        ((JSpinner.DefaultEditor) colonnesSpinner.getEditor()).getTextField().setFormatterFactory(new MyIntegerFormatterFactory("", " colonnes", 1, 100));
 
-        densiteLabel.setFont(policeSpinner);
-        densiteLabel.setText("Densite de la foret (%)");
-        spinnerDensitePanel.add(densiteLabel);
-        spinnerDensitePanel.add(densiteSpinner);
-        spinnerDensitePanel.setBackground(Color.decode(COULEUR_CHAMP_DE_TEXTE));
+        JPanel lignesColonnesPanel = new JPanel(new GridLayout(1, 2, 4, 0));
+        lignesColonnesPanel.setOpaque(false);
+        lignesColonnesPanel.add(this.lignesSpinner);
+        lignesColonnesPanel.add(this.colonnesSpinner);
+        spinnersPanel.add(lignesColonnesPanel);
 
-        humiditeLabel.setFont(policeSpinner);
-        humiditeLabel.setText("Arbre sur sol humide (%)");
-        spinnerHumiditePanel.add(humiditeLabel);
-        spinnerHumiditePanel.add(humiditeSpinner);
-        spinnerHumiditePanel.setBackground(Color.decode(COULEUR_CHAMP_DE_TEXTE));
+        // Densité de la forêt
+        this.densiteSpinner = new JSpinner(new SpinnerNumberModel(95, 0, 100, 1));
+        ((JSpinner.DefaultEditor) densiteSpinner.getEditor()).getTextField().setFormatterFactory(new MyIntegerFormatterFactory("Densite de la foret: "," %", 0, 100));
+        spinnersPanel.add(densiteSpinner);
 
-        inflammableLabel.setFont(policeSpinner);
-        inflammableLabel.setText("Arbre peu inflammable (%)");
-        spinnerInflammablePanel.add(inflammableLabel);
-        spinnerInflammablePanel.add(inflammableSpinner);
-        spinnerInflammablePanel.setBackground(Color.decode(COULEUR_CHAMP_DE_TEXTE));
+        // Taux d'arbres sur sol humide
+        this.tauxHumiditeSpinner = new JSpinner(new SpinnerNumberModel(5, 0, 100, 1));
+        ((JSpinner.DefaultEditor) tauxHumiditeSpinner.getEditor()).getTextField().setFormatterFactory(new MyIntegerFormatterFactory("Arbres sur sol humide: "," %", 0, 100));
+        spinnersPanel.add(tauxHumiditeSpinner);
 
-        //Evenement lorsqu'on appuye sur generer
-        buttonGenerer.setBackground(Color.decode(COULEUR_BOUTON_GENERER));
-        buttonGenerer.setForeground(Color.decode(COULEUR_BACKGROUND_ET_TEXT_BOUTTON));
-        buttonGenerer.setBorderPainted(false);
-        buttonGenerer.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                app.genererGrille(getLigne(), getColonne());
+        // Taux d'arbres peu inflammable
+        this.tauxArbresPeuInflammableSpinner = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
+        ((JSpinner.DefaultEditor) tauxArbresPeuInflammableSpinner.getEditor()).getTextField().setFormatterFactory(new MyIntegerFormatterFactory("Arbres peu inflammables: "," %", 0, 100));
+        spinnersPanel.add(tauxArbresPeuInflammableSpinner);
+
+        // Configuration des spinners
+        for (JSpinner spinner : new JSpinner[]{lignesSpinner, colonnesSpinner, densiteSpinner, tauxHumiditeSpinner, tauxArbresPeuInflammableSpinner}) {
+            if (spinner != lignesSpinner && spinner != colonnesSpinner)
+                spinner.setPreferredSize(new Dimension(220, 30));
+
+            // Centrer le texte
+            JSpinner.DefaultEditor spinnerEditor = (JSpinner.DefaultEditor) spinner.getEditor();
+            spinnerEditor.getTextField().setHorizontalAlignment(JTextField.CENTER);
+
+            // Couleur de fond et police de caractères
+            spinner.setBackground(Color.decode(COULEUR_BACKGROUND_CHAMP_DE_TEXTE));
+            spinnerEditor.getTextField().setBackground(Color.decode(COULEUR_BACKGROUND_CHAMP_DE_TEXTE));
+            spinnerEditor.getTextField().setForeground(Color.decode(COULEUR_CHAMP_DE_TEXTE));
+            spinnerEditor.getTextField().setFont(policeSpinnerEtLegende);
+
+            // Aucune bordure
+            spinner.setBorder(BorderFactory.createEmptyBorder());
+
+            // Ajout du listener pour le scroll de la souris
+            spinner.addMouseWheelListener(e -> {
+                if (e.getWheelRotation() < 0) {
+                    if (spinner.getModel().getPreviousValue() != null) spinner.setValue(spinner.getModel().getPreviousValue());
+                } else {
+                    if (spinner.getModel().getNextValue() != null) spinner.setValue(spinner.getModel().getNextValue());
+                }
+            });
+
+            // Ajout du listener pour le focus
+            spinnerEditor.getTextField().addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                    spinner.setBorder(new MatteBorder(0, 0, 1, 0, Color.decode(COULEUR_BOUTON_GENERER_ACTIF)));
+                    spinnerEditor.getTextField().setForeground(Color.decode(COULEUR_CHAMP_DE_TEXTE).darker().darker().darker());
+                }
+
+                @Override
+                public void focusLost(FocusEvent e) {
+                    spinner.setBorder(BorderFactory.createEmptyBorder());
+                    spinnerEditor.setBorder(BorderFactory.createEmptyBorder());
+                    spinnerEditor.getTextField().setForeground(Color.decode(COULEUR_CHAMP_DE_TEXTE));
+                }
+            });
+
+            // Récupération des boutons individuels du JSpinner
+            Component[] components = spinner.getComponents();
+            for (Component component : components) {
+                if (component instanceof JButton button) {
+                    // Bordure et couleur de fond.
+                    button.setBorder(BorderFactory.createLineBorder(Color.decode(COULEUR_BACKGROUND_CHAMP_DE_TEXTE), 1));
+                    button.setBackground(Color.decode(COULEUR_BACKGROUND_CHAMP_DE_TEXTE));
+                }
+            }
+        }
+        configPanel.add(spinnersPanel, BorderLayout.CENTER);
+
+        // Bouton "Générer"
+        this.buttonGenerer = new JButton("Generer");
+        this.buttonGenerer.setUI(new MetalButtonUI() {
+            protected Color getDisabledTextColor() {
+                return Color.decode(COULEUR_TEXTE_BOUTONS);
             }
         });
+        buttonGenerer.setBackground(Color.decode(COULEUR_BOUTON_GENERER_ACTIF));
+        buttonGenerer.setForeground(Color.decode(COULEUR_TEXTE_BOUTONS));
+        buttonGenerer.setFont(policeButton);
+        buttonGenerer.setPreferredSize(new Dimension(220, 35));
+        buttonGenerer.setFocusPainted(false);
+        buttonGenerer.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+        buttonGenerer.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                // Click gauche
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    if(buttonGenerer.isEnabled()) {
+                        app.setDensite(Menu.this.getDensite());
+                        app.setTauxCellulesHumides(Menu.this.getTauxCellulesHumides());
+                        app.setTauxArbresPeuInflammables(Menu.this.getTauxArbresPeuInflammable());
+                        app.genererGrille(Menu.this.getLignes(), Menu.this.getColonnes());
+                        app.setTauxForetDejaBrulee(0);
+                        Menu.this.updateTauxforetbrulee();
+                    }
+                }
+            }
 
-        configPanel.setLayout(new GridLayout(7, 1,0,4));
-        configPanel.add(configTitre);
-        configPanel.add(spinnerColonnePanel);
-        configPanel.add(spinnerLignePanel);
-        configPanel.add(spinnerDensitePanel);
-        configPanel.add(spinnerHumiditePanel);
-        configPanel.add(spinnerInflammablePanel);
-        configPanel.add(buttonGenerer);
-        configPanel.setBackground(Color.decode(COULEUR_BACKGROUND_ET_TEXT_BOUTTON));
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                if(buttonGenerer.isEnabled()) buttonGenerer.setBackground(Color.decode(COULEUR_BOUTON_GENERER_ACTIF).darker());
+            }
 
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                if(buttonGenerer.isEnabled()) buttonGenerer.setBackground(Color.decode(COULEUR_BOUTON_GENERER_ACTIF));
+            }
+        });
+        configPanel.add(buttonGenerer, BorderLayout.SOUTH);
 
-        menuComposantes.add(configPanel);
+        northAreaMenu.add(configPanel);
     }
 
     /**
-     * methode qui gere la mise en place partie Facteurs Externe du menu
+     * methode qui gere la mise en place de la partie Facteurs Externes du menu
      */
-    private void partieFacteurs(){
-        //Titre
-        facteursTitre.setFont(police);
-        facteursTitre.setPreferredSize(new Dimension(150, 10));
+    private void partieFacteursExternes(){
+        JPanel facteursPanel = new JPanel(new BorderLayout(0,6));
+        facteursPanel.setOpaque(false);
+
+        // Titre de la partie facteurs externes
+        JLabel facteursTitre = new JLabel("Facteurs externes");
+        facteursTitre.setFont(policeTitres);
+        facteursTitre.setPreferredSize(new Dimension(220, 25));
         facteursTitre.setHorizontalAlignment(JLabel.LEFT);
-        facteursTitre.setBorder(new MatteBorder(0, 0, 1, 0, Color.BLACK));
+        facteursTitre.setBorder(new MatteBorder(0, 0, 1, 0, Color.decode(COULEUR_SEPARATIONS)));
+        facteursPanel.add(facteursTitre, BorderLayout.NORTH);
 
-        //Spinner Direction vent
-        dirVentLabel.setFont(policeSpinner);
-        dirVentLabel.setText("Direction du vent :");
-        spinnerDirVentPanel.add(dirVentLabel);
-        spinnerDirVentPanel.add(dirVentSpinner);
-        spinnerDirVentPanel.setBackground(Color.decode(COULEUR_CHAMP_DE_TEXTE));
+        // Spinners pour récupérer des valeurs à l'utilisateur
+        JPanel spinnersPanel = new JPanel(new GridLayout(2, 1,0,3));
+        spinnersPanel.setOpaque(false);
 
-        //Spinner Saison
-        saisonLabel.setFont(policeSpinner);
-        saisonLabel.setText("Saison :");
-        spinnerSaisonPanel.add(saisonLabel);
-        spinnerSaisonPanel.add(saisonSpinner);
-        spinnerSaisonPanel.setBackground(Color.decode(COULEUR_CHAMP_DE_TEXTE));
+        // Direction du vent
+        String[] directions = new String[] {"Direction du vent: INDIFFERENT", "Direction du vent: WEST", "Direction du vent: NORD",
+                "Direction du vent: EST", "Direction du vent: SUD"};
+        this.directionVentSpinner = new JSpinner(new SpinnerListModel(directions));
+        spinnersPanel.add(directionVentSpinner);
 
-        facteursPanel.setLayout(new GridLayout(3, 1,0,4));
-        facteursPanel.add(facteursTitre);
-        facteursPanel.add(spinnerDirVentPanel);
-        facteursPanel.add(spinnerSaisonPanel);
-        facteursPanel.setBackground(Color.decode(COULEUR_BACKGROUND_ET_TEXT_BOUTTON));
+        // Saison
+        String[] saisons = new String[] {"Saison: INDIFFERENT", "Saison: PRINTEMPS", "Saison: ETE", "Saison: AUTOMNE", "Saison: HIVER"};
+        this.saisonSpinner = new JSpinner(new SpinnerListModel(saisons));
+        spinnersPanel.add(saisonSpinner);
 
-        menuComposantes.add(facteursPanel);
+        // Configuration des spinners
+        for (JSpinner spinner : new JSpinner[]{directionVentSpinner, saisonSpinner}) {
+            spinner.setPreferredSize(new Dimension(220, 30));
+
+            // Centrer le texte
+            JSpinner.DefaultEditor spinnerEditor = (JSpinner.DefaultEditor) spinner.getEditor();
+            spinnerEditor.getTextField().setHorizontalAlignment(JTextField.CENTER);
+            spinnerEditor.getTextField().setEditable(false);
+
+            // Couleur de fond et police de caractères
+            spinner.setBackground(Color.decode(COULEUR_BACKGROUND_CHAMP_DE_TEXTE));
+            spinnerEditor.getTextField().setBackground(Color.decode(COULEUR_BACKGROUND_CHAMP_DE_TEXTE));
+            spinnerEditor.getTextField().setForeground(Color.decode(COULEUR_CHAMP_DE_TEXTE));
+            spinnerEditor.getTextField().setFont(policeSpinnerEtLegende);
+
+            // Aucune bordure
+            spinner.setBorder(BorderFactory.createEmptyBorder());
+
+            // Ajout du listener pour le scroll de la souris
+            spinner.addMouseWheelListener(e -> {
+                if (e.getWheelRotation() < 0) {
+                    if (spinner.getModel().getPreviousValue() != null) spinner.setValue(spinner.getModel().getPreviousValue());
+                } else {
+                    if (spinner.getModel().getNextValue() != null) spinner.setValue(spinner.getModel().getNextValue());
+                }
+            });
+
+            // Ajout du listener pour le focus
+            spinnerEditor.getTextField().addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                    spinner.setBorder(new MatteBorder(0, 0, 1, 0, Color.decode(COULEUR_BOUTON_GENERER_ACTIF)));
+                    spinnerEditor.getTextField().setForeground(Color.decode(COULEUR_CHAMP_DE_TEXTE).darker().darker().darker());
+                }
+
+                @Override
+                public void focusLost(FocusEvent e) {
+                    spinner.setBorder(BorderFactory.createEmptyBorder());
+                    spinnerEditor.setBorder(BorderFactory.createEmptyBorder());
+                    spinnerEditor.getTextField().setForeground(Color.decode(COULEUR_CHAMP_DE_TEXTE));
+                }
+            });
+
+            // Récupération des boutons individuels du JSpinner
+            Component[] components = spinner.getComponents();
+            for (Component component : components) {
+                if (component instanceof JButton button) {
+                    // Bordure et couleur de fond.
+                    button.setBorder(BorderFactory.createLineBorder(Color.decode(COULEUR_BACKGROUND_CHAMP_DE_TEXTE), 1));
+                    button.setBackground(Color.decode(COULEUR_BACKGROUND_CHAMP_DE_TEXTE));
+                }
+            }
+        }
+        facteursPanel.add(spinnersPanel, BorderLayout.CENTER);
+
+        // Adding vertical space before adding the new menu section
+        JPanel verticalSpace = new JPanel();
+        verticalSpace.setPreferredSize(new Dimension(220, 10));
+        verticalSpace.setOpaque(false);
+        northAreaMenu.add(verticalSpace);
+
+        northAreaMenu.add(facteursPanel);
     }
 
     /**
-     * methode qui gere la mise en place partie Facteurs Externe du menu
+     * methode qui gere la mise en place de la partie Simuler du menu
      */
     private void partieSimuler(){
-        //Titre
-        simulerTitre.setFont(police);
-        simulerTitre.setPreferredSize(new Dimension(150, 10));
+        JPanel simulerPanel = new JPanel(new BorderLayout(0,6));
+        simulerPanel.setOpaque(false);
+
+        // Titre de la partie facteurs externes
+        JLabel simulerTitre = new JLabel("Simuler");
+        simulerTitre.setFont(policeTitres);
+        simulerTitre.setPreferredSize(new Dimension(220, 25));
         simulerTitre.setHorizontalAlignment(JLabel.LEFT);
-        simulerTitre.setBorder(new MatteBorder(0, 0, 1, 0, Color.BLACK));
+        simulerTitre.setBorder(new MatteBorder(0, 0, 1, 0, Color.decode(COULEUR_SEPARATIONS)));
+        simulerPanel.add(simulerTitre, BorderLayout.NORTH);
 
-        //Evenement lorsqu'on appuye sur Lancer
-        buttonLancer.setBackground(Color.decode(COULEUR_BOUTON_LANCER));
-        buttonLancer.setForeground(Color.decode(COULEUR_BACKGROUND_ET_TEXT_BOUTTON));
-        buttonLancer.setBorderPainted(false);
-        buttonLancer.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                app.lancerSimulation();
+        // Boutons pour lancer et stopper la simulation
+        JPanel boutonsPanel = new JPanel(new GridLayout(1, 2,5,0));
+        boutonsPanel.setOpaque(false);
+
+        // Bouton "Lancer"
+        this.buttonLancer = new JButton("Lancer");
+        this.buttonLancer.setUI(new MetalButtonUI() {
+            protected Color getDisabledTextColor() {
+                return Color.decode(COULEUR_TEXTE_BOUTONS);
             }
         });
+        buttonLancer.setBackground(Color.decode(COULEUR_BOUTON_LANCER_ACTIF));
+        buttonLancer.setForeground(Color.decode(COULEUR_TEXTE_BOUTONS));
+        buttonLancer.setFont(policeButton);
+        buttonLancer.setPreferredSize(new Dimension(buttonLancer.getWidth(), 35));
+        buttonLancer.setFocusPainted(false);
+        buttonLancer.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+        buttonLancer.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                // Click gauche
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    if (!app.getSimulationEnCours()) {
+                        app.setDirectionVent(Menu.this.getDirectionVent());
+                        app.setSaison(Menu.this.getSaison());
+                        activerBoutonGenerer(false);
+                        activerBoutonLancer(false);
+                        activerBoutonArreter(true);
+                        app.lancerSimulation();
+                    }
+                    else
+                        activerBoutonLancer(false);
+                }
+            }
 
-        //Evenement lorsqu'on appuye sur Arreter
-        buttonArreter.setBackground(Color.decode(COULEUR_BOUTON_ARRETER));
-        buttonArreter.setForeground(Color.decode(COULEUR_BACKGROUND_ET_TEXT_BOUTTON));
-        buttonArreter.setBorderPainted(false);
-        buttonArreter.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                app.setStopSimulation(true);
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                if(buttonLancer.isEnabled()) buttonLancer.setBackground(Color.decode(COULEUR_BOUTON_LANCER_ACTIF).darker());
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                if(buttonLancer.isEnabled()) buttonLancer.setBackground(Color.decode(COULEUR_BOUTON_LANCER_ACTIF));
             }
         });
+        boutonsPanel.add(buttonLancer);
 
-        simulerPanel.setLayout(new GridLayout(3, 1,0,4));
-        simulerPanel.add(simulerTitre);
-        simulerPanel.add(buttonLancer);
-        simulerPanel.add(buttonArreter);
-        simulerPanel.setBackground(Color.decode(COULEUR_BACKGROUND_ET_TEXT_BOUTTON));
+        // Bouton "Arrêter"
+        this.buttonArreter = new JButton("Arreter");
+        this.buttonArreter.setUI(new MetalButtonUI() {
+            protected Color getDisabledTextColor() {
+                return Color.decode(COULEUR_TEXTE_BOUTONS);
+            }
+        });
+        this.activerBoutonArreter(false);
+        buttonArreter.setBackground(Color.decode(COULEUR_BOUTON_ARRETER_NON_ACTIF));
+        buttonArreter.setForeground(Color.decode(COULEUR_TEXTE_BOUTONS));
+        buttonArreter.setFont(policeButton);
+        buttonArreter.setPreferredSize(new Dimension(buttonArreter.getWidth(), 35));
+        buttonArreter.setFocusPainted(false);
+        buttonArreter.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+        buttonArreter.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                // Click gauche
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    if(app.getSimulationEnCours()) {
+                        app.setStopSimulation(true);
+                        activerBoutonGenerer(true);
+                        activerBoutonLancer(true);
+                        activerBoutonArreter(false);
+                    }
+                    else
+                        activerBoutonArreter(false);
+                }
+            }
 
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                if (buttonArreter.isEnabled()) buttonArreter.setBackground(Color.decode(COULEUR_BOUTON_ARRETER_ACTIF).darker());
+            }
 
-        menuComposantes.add(simulerPanel);
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                if (buttonArreter.isEnabled()) buttonArreter.setBackground(Color.decode(COULEUR_BOUTON_ARRETER_ACTIF));
+            }
+        });
+        boutonsPanel.add(buttonArreter);
+
+        simulerPanel.add(boutonsPanel, BorderLayout.CENTER);
+
+        // Adding vertical space before adding the new menu section
+        JPanel verticalSpace = new JPanel();
+        verticalSpace.setPreferredSize(new Dimension(220, 9));
+        verticalSpace.setOpaque(false);
+        northAreaMenu.add(verticalSpace);
+
+        northAreaMenu.add(simulerPanel);
     }
 
     /**
-     * methode qui gere la mise en place partie du taux d'arbre brulee
+     * methode qui gere la mise en place de la partie pourcentage de forêt déjà brulée
      */
     private void partieTaux(){
-        //Titre
-        tauxTitre.setFont(policeTaux);
-        tauxTitre.setForeground(Color.decode(COULEUR_POURC_FORET_BRULEE));
-        tauxTitre.setPreferredSize(new Dimension(150, 10));
+        tauxTitre.setText(app.getTauxForetDejaBrulee() + " %");
+        tauxTitre.setFont(policeTauxForetDejaBrulee);
+        tauxTitre.setPreferredSize(new Dimension(250, 30));
         tauxTitre.setHorizontalAlignment(JLabel.CENTER);
-        tauxTitre.setBorder(new MatteBorder(0, 0, 1, 0, Color.BLACK));
+        tauxTitre.setForeground(Color.decode(COULEUR_POURC_FORET_BRULEE));
+        tauxTitre.setBorder(new MatteBorder(1, 0, 1, 0, Color.decode(COULEUR_SEPARATIONS)));
 
-        //Titre vide
-        titreVide.setPreferredSize(new Dimension(150, 40));
-        titreVide.setBorder(new MatteBorder(0, 0, 1, 0, Color.BLACK));
-
-        tauxPanel.setLayout(new GridLayout(2, 1,0,4));
-        tauxPanel.add(titreVide);
-        tauxPanel.add(tauxTitre);
-        tauxPanel.setBackground(Color.decode(COULEUR_BACKGROUND_ET_TEXT_BOUTTON));
-
-        menuComposantes.add(tauxPanel);
+        southAreaMenu.add(tauxTitre);
     }
+
     /**
-     * methode qui gere la mise en place de la partie legende
+     * methode qui gère la mise en place de la partie légende
      */
     private void partieLegende(){
-        //Sol nu
-        solNu.setFont(policeSpinner);
-        solNu.setPreferredSize(new Dimension(135, 20));
+        JPanel legendePanel = new JPanel(new GridLayout(8, 1,2,4));
+        legendePanel.setOpaque(false);
+
+        // Sol nu
+        JPanel solNuPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0,3));
+        solNuPanel.setPreferredSize(new Dimension(220, 20));
+        solNuPanel.setOpaque(false);
+        JLabel solNuCouleur = new JLabel();
+        solNuCouleur.setBackground(Color.decode(SolNu.COULEUR));
+        solNuCouleur.setOpaque(true);
+        solNuCouleur.setPreferredSize(new Dimension(14, 14));
+        solNuPanel.add(solNuCouleur);
+        JLabel solNu = new JLabel("  Sol nu");
+        solNu.setFont(policeSpinnerEtLegende);
         solNu.setHorizontalAlignment(JLabel.LEFT);
-        solNuCodeCouleur.setBackground(Color.decode(COULEUR_SOL_NU));
-        solNuCodeCouleur.setOpaque(true);
-        solNuCodeCouleur.setPreferredSize(new Dimension(15, 15));
-        solNuPanel.add(solNuCodeCouleur);
         solNuPanel.add(solNu);
-        solNuPanel.setBackground(Color.decode(COULEUR_BACKGROUND_ET_TEXT_BOUTTON));
-        //Arbre en vie
-        arbreVie.setFont(policeSpinner);
-        arbreVie.setPreferredSize(new Dimension(135, 10));
-        arbreVie.setHorizontalAlignment(JLabel.LEFT);
-        arbreVieCouleur.setBackground(Color.decode(COULEUR_ARBRE_EN_VIE));
+        legendePanel.add(solNuPanel);
+
+        // Arbre en vie
+        JPanel arbreViePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 3));
+        arbreViePanel.setPreferredSize(new Dimension(220, 20));
+        arbreViePanel.setOpaque(false);
+        JLabel arbreVieCouleur = new JLabel();
+        arbreVieCouleur.setBackground(Color.decode(Arbre.COULEUR_ARBRE_VIVANT));
         arbreVieCouleur.setOpaque(true);
-        arbreVieCouleur.setPreferredSize(new Dimension(15, 15));
+        arbreVieCouleur.setPreferredSize(new Dimension(14, 14));
         arbreViePanel.add(arbreVieCouleur);
+        JLabel arbreVie = new JLabel("  Arbre en vie");
+        arbreVie.setFont(policeSpinnerEtLegende);
+        arbreVie.setHorizontalAlignment(JLabel.LEFT);
         arbreViePanel.add(arbreVie);
-        arbreViePanel.setBackground(Color.decode(COULEUR_BACKGROUND_ET_TEXT_BOUTTON));
-        //Arbre en cendre
-        arbreCendre.setFont(policeSpinner);
-        arbreCendre.setPreferredSize(new Dimension(135, 10));
-        arbreCendre.setHorizontalAlignment(JLabel.LEFT);
-        arbreCendreCouleur.setBackground(Color.decode(COULEUR_ARBRE_EN_CENDRE));
-        arbreCendreCouleur.setOpaque(true);
-        arbreCendreCouleur.setPreferredSize(new Dimension(15, 15));
-        arbreCendrePanel.add(arbreCendreCouleur);
-        arbreCendrePanel.add(arbreCendre);
-        arbreCendrePanel.setBackground(Color.decode(COULEUR_BACKGROUND_ET_TEXT_BOUTTON));
-        //Arbre en feu
-        arbreFeu.setFont(policeSpinner);
-        arbreFeu.setPreferredSize(new Dimension(135, 10));
-        arbreFeu.setHorizontalAlignment(JLabel.LEFT);
-        arbreFeuCouleur.setBackground(Color.decode(COULEUR_ARBRE_EN_FEU));
+        legendePanel.add(arbreViePanel);
+
+        // Arbre en feu
+        JPanel arbreFeuPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 3));
+        arbreFeuPanel.setPreferredSize(new Dimension(220, 20));
+        arbreFeuPanel.setOpaque(false);
+        JLabel arbreFeuCouleur = new JLabel();
+        arbreFeuCouleur.setBackground(Color.decode(Arbre.COULEUR_ARBRE_EN_FEU));
         arbreFeuCouleur.setOpaque(true);
-        arbreFeuCouleur.setPreferredSize(new Dimension(15, 15));
+        arbreFeuCouleur.setPreferredSize(new Dimension(14, 14));
+        JLabel arbreFeu = new JLabel("  Arbre en feu");
+        arbreFeu.setFont(policeSpinnerEtLegende);
+        arbreFeu.setHorizontalAlignment(JLabel.LEFT);
         arbreFeuPanel.add(arbreFeuCouleur);
         arbreFeuPanel.add(arbreFeu);
-        arbreFeuPanel.setBackground(Color.decode(COULEUR_BACKGROUND_ET_TEXT_BOUTTON));
-        //Arbre sol humide
-        arbreSolHumide.setFont(policeSpinner);
-        arbreSolHumide.setPreferredSize(new Dimension(135, 10));
-        arbreSolHumide.setHorizontalAlignment(JLabel.LEFT);
-        arbreSolHumideCouleur.setBackground(Color.decode(COULEUR_ARBRE_SUR_SOL_HUMIDE));
-        arbreSolHumideCouleur.setOpaque(true);
-        arbreSolHumideCouleur.setPreferredSize(new Dimension(15, 15));
-        arbreSolHumidePanel.add(arbreSolHumideCouleur);
-        arbreSolHumidePanel.add(arbreSolHumide);
-        arbreSolHumidePanel.setBackground(Color.decode(COULEUR_BACKGROUND_ET_TEXT_BOUTTON));
-        //Arbre sol humide
-        arbreInflammable.setFont(policeSpinner);
-        arbreInflammable.setPreferredSize(new Dimension(135, 10));
-        arbreInflammable.setHorizontalAlignment(JLabel.LEFT);
-        arbreInflammableCouleur.setBackground(Color.decode(COULEUR_ARBRE_PEU_INFLAMMABLE));
-        arbreInflammableCouleur.setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
-        arbreInflammableCouleur.setOpaque(true);
-        arbreInflammableCouleur.setPreferredSize(new Dimension(15, 15));
-        arbreInflammablePanel.add(arbreInflammableCouleur);
-        arbreInflammablePanel.add(arbreInflammable);
-        arbreInflammablePanel.setBackground(Color.decode(COULEUR_BACKGROUND_ET_TEXT_BOUTTON));
-
-
-
-
-        legendePanel.setLayout(new GridLayout(6, 1,0,4));
-        legendePanel.add(solNuPanel);
-        legendePanel.add(arbreViePanel);
-        legendePanel.add(arbreCendrePanel);
         legendePanel.add(arbreFeuPanel);
+
+        // Arbre en cendre
+        JPanel arbreCendrePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 3));
+        arbreCendrePanel.setPreferredSize(new Dimension(220, 20));
+        arbreCendrePanel.setOpaque(false);
+        JLabel arbreCendreCouleur = new JLabel();
+        arbreCendreCouleur.setBackground(Color.decode(Arbre.COULEUR_ARBRE_EN_CENDRE));
+        arbreCendreCouleur.setOpaque(true);
+        arbreCendreCouleur.setPreferredSize(new Dimension(14, 14));
+        arbreCendrePanel.add(arbreCendreCouleur);
+        JLabel arbreCendre = new JLabel("  Arbre en cendre");
+        arbreCendre.setFont(policeSpinnerEtLegende);
+        arbreCendre.setHorizontalAlignment(JLabel.LEFT);
+        arbreCendrePanel.add(arbreCendre);
+        legendePanel.add(arbreCendrePanel);
+
+        // Arbre sol humide
+        JPanel arbreSolHumidePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 3));
+        arbreSolHumidePanel.setPreferredSize(new Dimension(220, 20));
+        arbreSolHumidePanel.setOpaque(false);
+        JLabel arbreSolHumideCouleur = new JLabel();
+        arbreSolHumideCouleur.setBackground(Color.decode(Arbre.COULEUR_SOL_HUMIDE));
+        arbreSolHumideCouleur.setOpaque(true);
+        arbreSolHumideCouleur.setPreferredSize(new Dimension(14, 14));
+        arbreSolHumidePanel.add(arbreSolHumideCouleur);
+        JLabel arbreSolHumide = new JLabel("  Arbre sur sol humide");
+        arbreSolHumide.setFont(policeSpinnerEtLegende);
+        arbreSolHumide.setHorizontalAlignment(JLabel.LEFT);
+        arbreSolHumidePanel.add(arbreSolHumide);
         legendePanel.add(arbreSolHumidePanel);
+
+        // Arbre peu inflammable
+        JPanel arbreInflammablePanel= new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 3));
+        arbreInflammablePanel.setPreferredSize(new Dimension(220, 20));
+        arbreInflammablePanel.setOpaque(false);
+        JLabel arbreInflammableCouleur = new JLabel();
+        arbreInflammableCouleur.setBackground(Color.decode(COULEUR_BACKGROUND_MENU));
+        arbreInflammableCouleur.setBorder(BorderFactory.createLineBorder(Color.decode(Arbre.COULEUR_PEU_INFLAMMABLE), 1));
+        arbreInflammableCouleur.setOpaque(true);
+        arbreInflammableCouleur.setPreferredSize(new Dimension(14, 14));
+        arbreInflammablePanel.add(arbreInflammableCouleur);
+        JLabel arbreInflammable = new JLabel("  Arbre peu inflammable");
+        arbreInflammable.setFont(policeSpinnerEtLegende);
+        arbreInflammable.setHorizontalAlignment(JLabel.LEFT);
+        arbreInflammablePanel.add(arbreInflammable);
         legendePanel.add(arbreInflammablePanel);
 
-        legendePanel.setBackground(Color.decode(COULEUR_BACKGROUND_ET_TEXT_BOUTTON));
+        // Adding vertical
+        JPanel verticalSpace = new JPanel();
+        verticalSpace.setPreferredSize(new Dimension(220, 5));
+        verticalSpace.setOpaque(false);
+        southAreaMenu.add(verticalSpace);
 
-        menuComposantes.add(legendePanel);
+        southAreaMenu.add(legendePanel);
     }
+
     /**
-     * les getter pour initialliser/mettre a jour les attributs de App
-     * @return
+     * Getter pour récupérer le nombre de lignes de la grille choisi par l'utilisateur.
+     * @return Le nombre de lignes de la grille choisi par l'utilisateur.
      */
-    public int getLigne(){
-        return (int) ligneSpinner.getValue();
+    public int getLignes(){
+        return (int) this.lignesSpinner.getValue();
     }
-    public int getColonne(){
-        return (int) colonneSpinner.getValue();
+
+    /**
+     * Getter pour récupérer le nombre de colonnes de la grille choisi par l'utilisateur.
+     * @return Le nombre de colonnes de la grille choisi par l'utilisateur.
+     */
+    public int getColonnes(){
+        return (int) this.colonnesSpinner.getValue();
     }
+
+    /**
+     * Getter pour récupérer la densité de la grille choisi par l'utilisateur.
+     * @return Le pourcentage d'arbres vivants de la grille choisi par l'utilisateur.
+     */
     public int getDensite(){
         return (int) densiteSpinner.getValue();
     }
-    public int getHumidite(){
-        return (int) humiditeSpinner.getValue();
-    }
-    public int getTauxInflammable(){
-        return (int) inflammableSpinner.getValue();
-    }
-    public String getDirectionVent(){
-        return (String) dirVentSpinner.getValue();
-    }
-    public String getSaison(){
-        return (String) saisonSpinner.getValue();
+
+    /**
+     * Getter pour récupérer le taux d'arbres sur sol humide que l'utilisateur souhaite avoir dans la grille.
+     * @return Le taux d'arbres sur sol humide que l'utilisateur souhaite avoir dans la grille.
+     */
+    public int getTauxCellulesHumides(){
+        return (int) tauxHumiditeSpinner.getValue();
     }
 
     /**
-     * Methode pour mettre a jour le taux de foret brulee.
-     * Quand l'utilisateur appuie sur Lancer, le programme va lancer App.LancerSimultaion() et cette methode.
-     * Tant que le programme n'est pas fini, on continuera a mettre a jour.
+     * Getter pour récupérer le taux d'arbres à faible inflammabilité que l'utilisateur souhaite avoir dans la grille.
+     * @return Le taux d'arbres à faible inflammabilité que l'utilisateur souhaite avoir dans la grille.
      */
-    public void upDate_Taux_foret_brulee() {
-        tauxTitre.setText(app.getTaux_foret_deja_brulee()+" %");
+    public int getTauxArbresPeuInflammable(){
+        return (int) tauxArbresPeuInflammableSpinner.getValue();
+    }
+
+    /**
+     * Getter pour récupérer la direction du vent choisie par l'utilisateur.
+     * @return La direction du vent choisie par l'utilisateur.
+     */
+    public String getDirectionVent(){
+        return String.valueOf(this.directionVentSpinner.getValue()).replace("Direction du vent: ", "");
+    }
+
+    /**
+     * Getter pour récupérer la saison choisie par l'utilisateur.
+     * @return La saison choisie par l'utilisateur.
+     */
+    public String getSaison(){
+        return String.valueOf(saisonSpinner.getValue()).replace("Saison: ", "");
+    }
+
+    /**
+     * Méthode permettant de mettre a jour le taux de forêt brulée.
+     */
+    public void updateTauxforetbrulee() {
+        DecimalFormat decimalFormater = new DecimalFormat("#.##");
+        this.tauxTitre.setText(decimalFormater.format(app.getTauxForetDejaBrulee()) + " %");
+    }
+
+    /**
+     * Méthode permettant d'activer ou de désactiver le bouton Générer lorsque nécessaire.
+     */
+    public void activerBoutonGenerer(boolean activer){
+        this.buttonGenerer.setEnabled(activer);
+        if(activer)
+            this.buttonGenerer.setBackground(Color.decode(COULEUR_BOUTON_GENERER_ACTIF));
+        else
+            this.buttonGenerer.setBackground(Color.decode(COULEUR_BOUTON_GENERER_NON_ACTIF));
+    }
+
+    /**
+     * Méthode permettant d'activer ou de désactiver le bouton Lancer lorsque nécessaire.
+     */
+    public void activerBoutonLancer(boolean activer){
+        this.buttonLancer.setEnabled(activer);
+        if(activer)
+            this.buttonLancer.setBackground(Color.decode(COULEUR_BOUTON_LANCER_ACTIF));
+        else
+            this.buttonLancer.setBackground(Color.decode(COULEUR_BOUTON_LANCER_NON_ACTIF));
+    }
+
+    /**
+     * Méthode permettant d'activer ou de désactiver le bouton Arrêter lorsque nécessaire.
+     */
+    public void activerBoutonArreter(boolean activer){
+        this.buttonArreter.setEnabled(activer);
+        if(activer)
+            this.buttonArreter.setBackground(Color.decode(COULEUR_BOUTON_ARRETER_ACTIF));
+        else
+            this.buttonArreter.setBackground(Color.decode(COULEUR_BOUTON_ARRETER_NON_ACTIF));
+    }
+}
+
+/**
+ * Cette classe est utilisée pour créer un format entier personnalisé pour les champs de texte de type JSpinner.
+ * Le but est d'ajouter du texte en préfixe ou en suffixe dans le champ tout en le maintenant en tant qu'entier.
+ */
+class MyIntegerFormatterFactory extends JFormattedTextField.AbstractFormatterFactory {
+    String prefix;
+    String suffix;
+    int min;
+    int max;
+
+    public MyIntegerFormatterFactory(String prefix, String suffix, int min, int max) {
+        this.prefix = prefix;
+        this.suffix = suffix;
+        this.min = min;
+        this.max = max;
+    }
+
+    @Override
+    public JFormattedTextField.AbstractFormatter getFormatter(JFormattedTextField tf) {
+        return new JFormattedTextField.AbstractFormatter() {
+            @Override
+            public Object stringToValue(String text) throws ParseException {
+                text = text.replace(prefix, "").replace(suffix, "");
+                String[] words = text.split(" ");
+                for (String word: words) {
+                    try {
+                        int parse = Integer.parseInt(word);
+                        if (parse >= min && parse <= max) return parse;
+                    } catch (Exception ignored) {}
+                }
+                throw new ParseException("", 0);
+            }
+
+            @Override
+            public String valueToString(Object value) {
+                return prefix + value + suffix;
+            }
+        };
     }
 }

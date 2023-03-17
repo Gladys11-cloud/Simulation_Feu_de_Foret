@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Simulation_feu_de_foret" company="" webLink="" view-date="2023-01-30" view-index="0" gantt-divider-location="351" resource-divider-location="300" version="3.2.3247" locale="fr_FR">
+<?xml version="1.0" encoding="UTF-8"?><project name="Simulation_feu_de_foret" company="" webLink="" view-date="2023-01-30" view-index="0" gantt-divider-location="484" resource-divider-location="300" version="3.2.3247" locale="fr_FR">
     <description/>
     <view zooming-state="default:7" id="gantt-chart">
-        <field id="tpd3" name="Nom" width="200" order="0"/>
-        <field id="tpd4" name="Date de début" width="75" order="1"/>
-        <field id="tpd5" name="Date de fin" width="75" order="2"/>
+        <field id="tpd3" name="Nom" width="370" order="0"/>
+        <field id="tpd4" name="Date de début" width="20" order="1"/>
+        <field id="tpd5" name="Date de fin" width="93" order="2"/>
         <option id="filter.completedTasks" value="false"/>
         <timeline>
-            <![CDATA[2,6,7,0,8,1,4,5,3]]>
+            <![CDATA[3,8,7,6,5,4,0,2,1]]>
         </timeline>
         <option id="color.recent">
             <![CDATA[#3333ff #00cc00 #ff0000 #9933ff #ff6633]]>
@@ -51,32 +51,43 @@
                 <![CDATA[Tirer le meilleurs des diagrammes proposés et mettre en place un diagramme UML définitif et validé par toute l'équipe: un membre volontaire unifie tous les diagrammes et propose le résultat sur le groupe de discussion pour validation et correction des autres membres du groupe]]>
             </notes>
         </task>
-        <task id="2" name="Décomposition du projet en tâches" color="#9933ff" meeting="false" start="2023-02-21" duration="4" complete="0" thirdDate="2023-02-02" thirdDate-constraint="0" expand="true">
+        <task id="9" name="Recherches sur l'état de l'art" color="#8cb6ce" meeting="false" start="2023-02-21" duration="20" complete="0" thirdDate="2023-01-30" thirdDate-constraint="0" expand="true">
             <notes>
-                <![CDATA[Décomposition du projet en taches: un membre volontaire propose une décomposition en taches du projet dans le groupe de discussion pour validation des autres membres du groupe. Une fois les taches validées, ce membre les ajoute dans l'outil de gestion des taches (Trello)]]>
+                <![CDATA[Recherches sur l'état de l'art dans le but de comprendre l'existant et d'etablir un modèle de simulation que nous utiliserons dans la version 1 de notre logiciel du logiciel.]]>
             </notes>
         </task>
-        <task id="3" name="Distribution des taches" color="#9933ff" meeting="false" start="2023-02-27" duration="2" complete="0" thirdDate="2023-02-02" thirdDate-constraint="0" expand="true">
+        <task id="2" name="Décomposition du projet en sous tâches" color="#9933ff" meeting="false" start="2023-03-21" duration="2" complete="0" thirdDate="2023-02-02" thirdDate-constraint="0" expand="true">
             <notes>
-                <![CDATA[Distribution des taches: chaque membre du groupe choisi les taches sur lesquelles il se sent le plus à l'aise ]]>
+                <![CDATA[Décomposition du projet en taches: un membre volontaire propose une décomposition en taches du projet dans le groupe de discussion pour validation des autres membres du groupe. Une fois les taches validées, ce membre les ajoute dans l'outil de gestion des taches (Trello).
+chaque membre du groupe choisi les taches sur lesquelles il se sent le plus à l'aise.]]>
             </notes>
         </task>
-        <task id="4" name="Phase de développement et test unitaire" color="#ff0000" meeting="false" start="2023-03-01" duration="39" complete="0" thirdDate="2023-02-02" thirdDate-constraint="0" expand="true">
+        <task id="4" name="Phase de développement et test unitaire de la version 1" color="#ff0000" meeting="false" start="2023-03-23" duration="21" complete="0" thirdDate="2023-02-02" thirdDate-constraint="0" expand="true">
             <notes>
                 <![CDATA[Phase de développement et test unitaire: chaque membre du groupe travaille sur les tâches qu'il a choisi en veillant à mettre à jour Trello pour que l'équipe soit au courant de sa progression. Il veille également à bien commenter le code pour que la documentation technique soit générée automatiquement avec sphinx au terme du projet. Il doit également écrire en parallèle un mini rapport de ses tâches ]]>
             </notes>
         </task>
-        <task id="5" name="Phase de test général" color="#ff0000" meeting="false" start="2023-04-25" duration="5" complete="0" thirdDate="2023-03-27" thirdDate-constraint="0" expand="true">
+        <task id="10" name="Recherches sur l'influence des facteurs externes" color="#8cb6ce" meeting="false" start="2023-04-21" duration="3" complete="0" thirdDate="2023-01-30" thirdDate-constraint="0" expand="true">
+            <notes>
+                <![CDATA[Recherches pour comprendre dans quelle mesure les facteurs externes tels que le vent, l'humidité, la saison et le type de végétation influencent la propagation d'un feu de forêt.]]>
+            </notes>
+        </task>
+        <task id="11" name="Intégration des facteurs externes pour obtenir la version 2 du logiciel" color="#ff0000" meeting="false" start="2023-04-26" duration="11" complete="0" thirdDate="2023-03-23" thirdDate-constraint="0" expand="true">
+            <notes>
+                <![CDATA[Modification du code pour intégrer l'influence des facteurs externes sur la propagation du feu.]]>
+            </notes>
+        </task>
+        <task id="5" name="Phase de test général" color="#ff0000" meeting="false" start="2023-05-11" duration="3" complete="0" thirdDate="2023-03-27" thirdDate-constraint="0" expand="true">
             <notes>
                 <![CDATA[Phase de test général: chaque membre du groupe teste et valide le bon fonctionnement général du software réalisé ]]>
             </notes>
         </task>
-        <task id="6" name="Génération automatique de la documentation technique" color="#ff0000" meeting="false" start="2023-05-02" duration="4" complete="0" thirdDate="2023-04-14" thirdDate-constraint="0" expand="true">
+        <task id="6" name="Génération automatique de la documentation technique" color="#ff0000" meeting="false" start="2023-05-16" duration="3" complete="0" thirdDate="2023-04-14" thirdDate-constraint="0" expand="true">
             <notes>
                 <![CDATA[Génération automatique de la documentation technique: un membre volontaire génère automatiquement la documentation technique en utilisant un outil comme sphinx qui se base sur les commentaires du code. Le résultat devra ensuite être validé par les autres membres du groupe ]]>
             </notes>
         </task>
-        <task id="7" name="Rédaction du rapport et de la présentation powerpoint pour la soutenance" color="#ff0000" meeting="false" start="2023-05-08" duration="15" complete="0" thirdDate="2023-04-14" thirdDate-constraint="0" expand="true">
+        <task id="7" name="Rédaction du rapport et de la présentation powerpoint" color="#ff0000" meeting="false" start="2023-05-18" duration="8" complete="0" thirdDate="2023-04-14" thirdDate-constraint="0" expand="true">
             <notes>
                 <![CDATA[Rédaction du rapport et de la présentation powerpoint pour la soutenance: le rapport sera décomposé en parties et chaque membre aura la charge d'une partie. Une simulation de la soutenance devra également être faite ]]>
             </notes>

@@ -1,16 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
- * Cette classe abstraite est une extension de la classe JPannel de Java. Elle permet de modéliser les composantes de la forêt.
+ * Cette classe abstraite est une extension de la classe JPanel de Java. Elle permet de modéliser les composantes de la forêt.
  */
 public abstract class Cellule extends JPanel {
 
     /** Représente la couleur générale des bordures d'une cellule. */
-    public static final String COULEUR_BORDURE_CELLULE = "#EACB9A";
-    /** Représente l’état de la cellule (0 => sol nu, 1 => vivant, 2 => en feu, 3 => en cendre). */
+    public static final String COULEUR_BORDURE_CELLULE = "#F6E5C6"; //EACB9A  F6E5C6
+    /** Représente l’état de la cellule (0 → sol nu, 1 → vivant, 2 → en feu, 3 → en cendre). */
     protected int etat;
     /** Représente l’état futur de la cellule à la prochaine itération. */
     protected int etat_futur;
@@ -18,7 +16,7 @@ public abstract class Cellule extends JPanel {
     protected int x;
     /** Numéro de colonne ou se trouve la cellule dans la grille. */
     protected int y;
-    /** Représente la liste des voisins de la cellule dans l’ordre suivant: [voisin gauche, voisin du haut, voisin de droite, voisin du bas]. */
+    /** Représente la liste des voisins de la cellule dans l’ordre suivant : [voisin gauche, voisin du haut, voisin de droite, voisin du bas]. */
     protected Cellule[] voisins;
     /** Représente la référence de l'objet grille dans lequel se trouve la cellule. */
     protected Grille grille;
@@ -34,8 +32,9 @@ public abstract class Cellule extends JPanel {
      * @param grille La référence de l'objet grille dans lequel se trouve la cellule.
      */
     public Cellule(int x, int y, Grille grille) {
-        // Appeler le constructeur de JPannel
+        // Appeler le constructeur de JPanel
         super();
+        this.setSize(new Dimension(50, 50));
 
         // Initialiser les attributs de la classe
         this.x = x;
@@ -50,7 +49,7 @@ public abstract class Cellule extends JPanel {
         // Pour tracer une bordure fine autour de la cellule
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(Color.decode(COULEUR_BORDURE_CELLULE));
-        g2d.setStroke(new BasicStroke(0.5f));
+        g2d.setStroke(new BasicStroke(0.01f));
         g2d.drawRect(0, 0, getWidth(), getHeight());
         g2d.dispose();
     }
@@ -59,7 +58,7 @@ public abstract class Cellule extends JPanel {
      * Getter de l'attribut "etat". Renvoie l’état courant de la cellule (0, 1, 2, 3).
      */
     public int getEtat () {
-        return etat;
+        return this.etat;
     }
 
     /**
