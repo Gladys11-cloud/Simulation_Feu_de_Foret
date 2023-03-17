@@ -124,7 +124,7 @@ public class Menu extends JPanel {
         configPanel.setOpaque(false);
 
         // Titre de la partie configurer la forêt
-        JLabel configTitre = new JLabel("Configurer la foret");
+        JLabel configTitre = new JLabel("Configurer la for\u00EAt");
         configTitre.setFont(policeTitres);
         configTitre.setPreferredSize(new Dimension(220, 25));
         configTitre.setHorizontalAlignment(JLabel.LEFT);
@@ -149,7 +149,7 @@ public class Menu extends JPanel {
 
         // Densité de la forêt
         this.densiteSpinner = new JSpinner(new SpinnerNumberModel(95, 0, 100, 1));
-        ((JSpinner.DefaultEditor) densiteSpinner.getEditor()).getTextField().setFormatterFactory(new MyIntegerFormatterFactory("Densite de la foret: "," %", 0, 100));
+        ((JSpinner.DefaultEditor) densiteSpinner.getEditor()).getTextField().setFormatterFactory(new MyIntegerFormatterFactory("Densite de la for\u00EAt: "," %", 0, 100));
         spinnersPanel.add(densiteSpinner);
 
         // Taux d'arbres sur sol humide
@@ -218,7 +218,7 @@ public class Menu extends JPanel {
         configPanel.add(spinnersPanel, BorderLayout.CENTER);
 
         // Bouton "Générer"
-        this.buttonGenerer = new JButton("Generer");
+        this.buttonGenerer = new JButton("G\u00E9n\u00E9rer");
         this.buttonGenerer.setUI(new MetalButtonUI() {
             protected Color getDisabledTextColor() {
                 return Color.decode(COULEUR_TEXTE_BOUTONS);
@@ -424,7 +424,7 @@ public class Menu extends JPanel {
         boutonsPanel.add(buttonLancer);
 
         // Bouton "Arrêter"
-        this.buttonArreter = new JButton("Arreter");
+        this.buttonArreter = new JButton("Arr\u00EAter");
         this.buttonArreter.setUI(new MetalButtonUI() {
             protected Color getDisabledTextColor() {
                 return Color.decode(COULEUR_TEXTE_BOUTONS);
