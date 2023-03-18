@@ -8,28 +8,29 @@ import java.awt.*;
  * Elle permet de créer la fenêtre, d'y ajouter les Panels Menu et Grille, puis de lancer la simulation.
  */
 public class App extends JFrame {
+
     /** La grille qui modélise la forêt. */
     private Grille grille ;
-    /** La panneau de défilement qui contient la grille */
+    /** Le panneau de défilement qui contient la grille */
     private final JScrollPane grilleScrollPane;
     /** Le panneau contenant le menu de l’application. */
     private final Menu menu ;
     /** La Densité des arbres dans la forêt en pourcentage. */
     private int densite;
-    /** La direction du vent (NORD, SUD, EST, OUEST). */
+    /** La direction du vent : INDIFFERENT, NORD, SUD, EST ou OUEST. */
     private String direction_vent;
-    /** La saison: HIVER, PRINTEMPS, ETE, AUTOMNE. */
+    /** La saison: INDIFFERENT, HIVER, PRINTEMPS, ETE ou AUTOMNE. */
     private String saison;
-    /** Le taux en pourcentage d’arbre à faible inflammabilité. */
+    /** Le taux en pourcentage d’arbres à faible inflammabilité. */
     private int tauxArbresPeuInflammables;
     /** Le taux en pourcentage de cellules ayant un sol humide. */
     private int tauxCellulesHumides;
-    /** Le taux en pourcentage de forêt déjà brulée. */
+    /** Le taux en pourcentage de la forêt déjà brulée. */
     private double tauxForetDejaBrulee;
     /** Permet à la méthode lancerSimulation() de savoir si l’utilisateur a cliqué sur le bouton « Arrêter ». True si oui et False sinon. */
-    boolean stopSimulation;
+    private boolean stopSimulation;
     /** Indique si une simulation en cours. True si oui et false sinon. */
-    boolean simulationEnCours;
+    private boolean simulationEnCours;
     /**
      * Constructeur de la classe App qui crée une nouvelle instance d'App.
      */
@@ -232,6 +233,8 @@ public class App extends JFrame {
 
     /**
      * Méthode main de l'application. C'est le point d'entré de l'application qui créé une instance de la classe App.
+     *
+     * @param args Représente les paramètres pouvant être passés à travers le terminal.
      */
     public static void main(String[] args){
         // invokeLater est utilisé pour exécuter le code Swing dans le thread de l'interface utilisateur.
@@ -243,22 +246,34 @@ public class App extends JFrame {
  * Sous-classe de BasicScrollBarUI pour personnaliser l'apparence des barres de défilement.
  */
 class CustomScrollBarUI extends BasicScrollBarUI {
-    Color trackColor = new Color(0, 0, 0, 20);
-    Color thumbColor = new Color(0, 0, 0, 70);
-    int thumbThickness = 6;
-    int trackThickness = 6;
+    /** Couleur de la piste de la barre de défilement */
+    private Color trackColor = new Color(0, 0, 0, 20);
+    /** Couleur du curseur de la barre de défilement */
+    private Color thumbColor = new Color(0, 0, 0, 70);
+    /** Largeur du curseur de la barre de défilement */
+    private int thumbThickness = 6;
+    /** Largeur de la piste de la barre de défilement */
+    private int trackThickness = 6;
 
+    /**
+     * Permet de créer un bouton invisible en tant que bouton decrease de la barre de défilement.
+     * */
     @Override
     protected JButton createDecreaseButton(int orientation) {
         return createButton();
     }
 
+    /**
+     * Permet de créer un bouton invisible en tant que bouton increase de la barre de défilement.
+     * */
     @Override
     protected JButton createIncreaseButton(int orientation) {
         return createButton();
     }
 
-    // Creates a custom invisible button with zero dimensions
+    /**
+     * Permet de créer un bouton invisible pour la barre de défilement.
+     * */
     private JButton createButton() {
         JButton button = new JButton();
         button.setPreferredSize(new Dimension(0, 0));
@@ -266,7 +281,9 @@ class CustomScrollBarUI extends BasicScrollBarUI {
         return button;
     }
 
-    // Paints the track of the scrollbar
+    /**
+     * Dessine la piste de la barre de défilement.
+     */
     @Override
     protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
         g.setColor(trackColor);
@@ -283,7 +300,9 @@ class CustomScrollBarUI extends BasicScrollBarUI {
         }
     }
 
-    // Paints the thumb of the scrollbar
+    /**
+     * Dessine le curseur de la barre de défilement.
+     */
     @Override
     protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
         Graphics2D g2 = (Graphics2D) g.create();

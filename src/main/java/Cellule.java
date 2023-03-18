@@ -7,7 +7,7 @@ import java.awt.*;
 public abstract class Cellule extends JPanel {
 
     /** Représente la couleur générale des bordures d'une cellule. */
-    public static final String COULEUR_BORDURE_CELLULE = "#F6E5C6"; //EACB9A  F6E5C6
+    public static final String COULEUR_BORDURE_CELLULE = "#F6E5C6";
     /** Représente l’état de la cellule (0 → sol nu, 1 → vivant, 2 → en feu, 3 → en cendre). */
     protected int etat;
     /** Représente l’état futur de la cellule à la prochaine itération. */
@@ -21,9 +21,6 @@ public abstract class Cellule extends JPanel {
     /** Représente la référence de l'objet grille dans lequel se trouve la cellule. */
     protected Grille grille;
 
-
-    // @param largeur La largeur initiale de la cellule lors de sa création.
-    // @param hauteur La hauteur initiale de la cellule lors de sa création.
     /**
      * Constructeur de la classe qui crée une nouvelle instance de Cellule avec les paramètres donnés.
      *
@@ -56,6 +53,8 @@ public abstract class Cellule extends JPanel {
 
     /**
      * Getter de l'attribut "etat". Renvoie l’état courant de la cellule (0, 1, 2, 3).
+     *
+     * @return L'état courant de la cellule (0, 1, 2, 3).
      */
     public int getEtat () {
         return this.etat;
@@ -72,6 +71,8 @@ public abstract class Cellule extends JPanel {
 
     /**
      * Getter de l'attribut "etatFutur". Renvoie l'état futur de la cellule.
+     *
+     * @return L'état futur de la cellule
      */
     public  int getEtatFutur () {
         return etat_futur;
@@ -80,6 +81,8 @@ public abstract class Cellule extends JPanel {
     /**
      * Getter de l'attribut "voisins". Retourne un tableau contenant la liste des voisins de la cellule dans l’ordre suivant :
      * [voisin de gauche, voisin du haut, voisin de droite, voisin du bas]
+     *
+     * @return La liste des voisins de la cellule.
      */
     public Cellule[] getVoisins () {
         return voisins;

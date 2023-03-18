@@ -12,6 +12,7 @@ import java.text.ParseException;
  * (Boutons, etc.) permettant de configurer la grille et de lancer la simulation.
  */
 public class Menu extends JPanel {
+
     /** Contient la référence de l’instance d'App dans laquelle se trouve le menu. */
     private final App app;
     /** Couleur en hexadecimal du bouton « Générer » lorsqu'il est actif. */
@@ -70,6 +71,7 @@ public class Menu extends JPanel {
     private JButton buttonLancer;
     /** Bouton qui permet d'arrêter ou mettre en pause la simulation du feu de forêt. */
     private JButton buttonArreter;
+    /** Label qui contient le pourcentage de forêt brulée au cours de la simulation. */
     JLabel tauxTitre;
 
     /**
@@ -666,6 +668,8 @@ public class Menu extends JPanel {
 
     /**
      * Méthode permettant d'activer ou de désactiver le bouton Générer lorsque nécessaire.
+     *
+     * @param activer Vaut true s'il faut activer le bouton Générer et false sinon
      */
     public void activerBoutonGenerer(boolean activer){
         this.buttonGenerer.setEnabled(activer);
@@ -677,6 +681,8 @@ public class Menu extends JPanel {
 
     /**
      * Méthode permettant d'activer ou de désactiver le bouton Lancer lorsque nécessaire.
+     *
+     * @param activer Vaut true s'il faut activer le bouton Lancer et false sinon
      */
     public void activerBoutonLancer(boolean activer){
         this.buttonLancer.setEnabled(activer);
@@ -688,6 +694,8 @@ public class Menu extends JPanel {
 
     /**
      * Méthode permettant d'activer ou de désactiver le bouton Arrêter lorsque nécessaire.
+     *
+     * @param activer Vaut true s'il faut activer le bouton Arrêter et false sinon
      */
     public void activerBoutonArreter(boolean activer){
         this.buttonArreter.setEnabled(activer);
@@ -703,10 +711,14 @@ public class Menu extends JPanel {
  * Le but est d'ajouter du texte en préfixe ou en suffixe dans le champ tout en le maintenant en tant qu'entier.
  */
 class MyIntegerFormatterFactory extends JFormattedTextField.AbstractFormatterFactory {
-    String prefix;
-    String suffix;
-    int min;
-    int max;
+    /** Préfixe à placer avant l'entier dans le champ de texte. */
+    private String prefix;
+    /** Suffixe à placer après l'entier dans le champ de texte. */
+    private String suffix;
+    /** Valeur minimale possible dans le champ de texte. */
+    private int min;
+    /** Valeur maximale possible dans le champ de texte. */
+    private int max;
 
     public MyIntegerFormatterFactory(String prefix, String suffix, int min, int max) {
         this.prefix = prefix;

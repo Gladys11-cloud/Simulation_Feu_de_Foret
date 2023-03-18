@@ -32,6 +32,8 @@ public class Arbre extends Cellule {
      * @param x      Le numéro de ligne ou se trouve la cellule dans la grille.
      * @param y      Le numéro de colonne ou se trouve la cellule dans la grille.
      * @param grille La référence de l'objet grille dans lequel se trouve la cellule.
+     * @param sol_humide Indique si l'arbre est placé sur un sol humide ou pas.
+     * @param arbre_peu_inflammable Indique si l'arbre est peu inflammable ou pas.
      */
     public Arbre(int x, int y, Grille grille, Boolean sol_humide, Boolean arbre_peu_inflammable){
         super(x, y, grille);

@@ -11,7 +11,7 @@ intitulée Projet mathématique-informatique de l’université d’Aix-Marseill
 
 ## Roadmap
 Le planning que nous avons suivi au cours de la réalisation de ce projet
-est contenu dans le répertoire [gantt/Gantt_simulation_feu_de_foret.pdf](gantt/Gantt_simulation_feu_de_foret.pdf)
+est contenu dans le répertoire [```gantt/Gantt_simulation_feu_de_foret.pdf```](gantt/Gantt_simulation_feu_de_foret.pdf)
 
 ## Code:
 Le répertoire ```src/main/java/``` contient les fichiers source du projet.
@@ -29,6 +29,6 @@ Il contient la méthode main du projet.
 * Au pied du menu, il est possible de voir le pourcentage d'arbres déjà brulés ainsi qu'une légende expliquant le code couleur utilisé dans l'application.
 
 ## Documentation
-Le rapport en format pdf de ce projet est accessible à l'adresse ```rapport/```.
+Le rapport en format pdf de ce projet est accessible à l'adresse [```docs/```](docs/).
 
-Tandis que La documentation technique en format `html` est accessible à l'adresse ```rapport/doc_technique/```.
+Tandis que La documentation technique en format `html` est accessible à l'adresse [```docs/doc_technique/package-summary.html```](docs/doc_technique/package-summary.html).

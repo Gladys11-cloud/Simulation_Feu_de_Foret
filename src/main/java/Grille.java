@@ -8,6 +8,7 @@ import java.util.Random;
  * Cette classe est une extension de la classe JPanel de Java. Elle permet d’implémenter la grille sur laquelle se déroulera la simulation.
  */
 public class Grille extends JPanel {
+
     /** Représente la couleur de fond de la grille. */
     public static final String COULEUR_FOND_GRILLE = "#F5F5F5";
     /** Représente le nombre de lignes de la grille */
@@ -27,6 +28,8 @@ public class Grille extends JPanel {
 
     /**
      * Méthode qui renvoie le nombre de lignes de la grille.
+     *
+     * @return Le nombre de lignes de la grille.
      */
     public int getNbLignes() {
         return nb_lignes;
@@ -34,6 +37,8 @@ public class Grille extends JPanel {
 
     /**
      * Méthode qui renvoie le nombre de colonnes de la grille.
+     *
+     * @return Le nombre de colonnes de la grille.
      */
     public int getNbColonnes() {
         return nb_colonnes;
@@ -204,6 +209,8 @@ public class Grille extends JPanel {
      * Elle retourne un array de deux entiers, le premier contiendra 0 si on doit arrêter la simulation (il n’y a plus d’arbres en feu) et 1 sinon.
      * Le second contiendra le pourcentage de la forêt déjà brulée.
      *
+     * @param direction_vent La direction du vent (INDIFFERENT, NORD, SUD, EST, OUEST).
+     * @param saison La saison (INDIFFERENT, PRINTEMPS, ETE, AUTOMNE, HIVER).
      * @return [a, b] ; a = 0 s'il n'y a plus d'arbre en feu et a = 1 sinon ; b = pourcentage forêt déjà brulée.
      */
     public double[] simulation(String direction_vent, String saison){
