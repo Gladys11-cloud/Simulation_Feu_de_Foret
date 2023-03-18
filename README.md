@@ -14,8 +14,8 @@ Le planning que nous avons suivi au cours de la réalisation de ce projet
 est contenu dans le répertoire [```gantt/Gantt_simulation_feu_de_foret.pdf```](gantt/Gantt_simulation_feu_de_foret.pdf)
 
 ## Code:
-Le répertoire ```src/main/java/``` contient les fichiers source du projet.
-Le répertoire ```src/test/java/``` contient les classes de test de l'application.
+Le répertoire [```src/main/java/```](src/main/java/) contient les fichiers source du projet.
+Le répertoire [```src/test/java/```](src/test/java/) contient les classes de test de l'application.
 Les dépendances du projet sont listées dans le fichier [```build.gradle```](build.gradle)
 Le fichier [```App.java```](src/main/java/App.java) est le fichier à lancer pour exécuter le projet en mode graphique.
 Il contient la méthode main du projet.
