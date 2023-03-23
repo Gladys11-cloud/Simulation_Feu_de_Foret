@@ -220,7 +220,8 @@ public class Arbre extends Cellule {
         if(this.feuVersCellule(direction_vent)) p += 0.5;
 
         // Impact de la saison sur p
-        if(saison.equals("HIVER")) p -= 0.1;
+        if(saison == null){}
+        else if(saison.equals("HIVER")) p -= 0.1;
         else if(saison.equals("ETE")) p += 0.1;
 
         // Impact de l'humidité du sol sur p.
@@ -256,16 +257,16 @@ public class Arbre extends Cellule {
      */
     private boolean feuVersCellule(String direction_vent){
         if (voisins[0] != null) {
-            if(voisins[0].etat == 2 && direction_vent.equals("EST")) return true;
+            if(voisins[0].etat == 2 && direction_vent == "EST") return true;
         }
         if (voisins[1] != null) {
-            if(voisins[1].etat == 2 && direction_vent.equals("SUD")) return true;
+            if(voisins[1].etat == 2 && direction_vent =="SUD") return true;
         }
         if (voisins[2] != null) {
-            if(voisins[2].etat == 2 && direction_vent.equals("OUEST")) return true;
+            if(voisins[2].etat == 2 && direction_vent =="OUEST") return true;
         }
         if (voisins[3] != null) {
-            if (voisins[3].etat == 2 && direction_vent.equals("NORD")) return true;
+            if (voisins[3].etat == 2 && direction_vent =="NORD") return true;
         }
         return false;
     }
