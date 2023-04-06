@@ -13,65 +13,65 @@ import java.text.ParseException;
  */
 public class Menu extends JPanel {
 
-    /** Contient la référence de l’instance d'App dans laquelle se trouve le menu. */
+
     private final App app;
-    /** Couleur en hexadecimal du bouton « Générer » lorsqu'il est actif. */
+
     private final static String COULEUR_BOUTON_GENERER_ACTIF = "#007FFF";
-    /** Couleur en hexadecimal du bouton « Générer » lorsqu'il n'est pas actif. */
+
     private final static String COULEUR_BOUTON_GENERER_NON_ACTIF = "#7AB9FA";
-    /** Couleur en hexadecimal du bouton « Lancer » lorsqu'il est actif. */
+
     private final static String COULEUR_BOUTON_LANCER_ACTIF = "#1DA15D";
-    /** Couleur en hexadecimal du bouton « Lancer » lorsqu'il n'est pas actif. */
+
     private final static String COULEUR_BOUTON_LANCER_NON_ACTIF = "#88CAA8";
-    /** Couleur en hexadecimal du bouton « Arrêter » lorsqu'il est actif. */
+
     private final static String COULEUR_BOUTON_ARRETER_ACTIF = "#FC1C2C";
-    /** Couleur en hexadecimal du bouton « Arrêter » lorsqu'il n'est pas actif. */
+
     private final static String COULEUR_BOUTON_ARRETER_NON_ACTIF = "#F88890";
-    /** Couleur en hexadecimal des champs de texte qui permettent à l’utilisateur de faire des choix (JSpinner). */
+
     private final static String COULEUR_BACKGROUND_CHAMP_DE_TEXTE = "#EEECEC";
-    /** Couleur en hexadecimal des champs de texte qui permettent à l’utilisateur de faire des choix (JSpinner). */
+
     private final static String COULEUR_CHAMP_DE_TEXTE = "#606060";
-    /** Couleur en hexadecimal des lignes de séparation. */
+
     private final static String COULEUR_SEPARATIONS = "#D9D9D9";
-    /** Couleur en hexadecimal d’affichage du pourcentage de forêt brulée. */
+
     private final static String COULEUR_POURC_FORET_BRULEE = "#F3770F";
-    /** Couleur de fond du menu */
+
     private final static String COULEUR_BACKGROUND_MENU = "#F5F5F5";
-    /** Couleur du texte des boutons */
+
     private final static String COULEUR_TEXTE_BOUTONS = "#FFFFFF";
-    /** Police utilisée pour les titres dans le menu. */
+
     private final static Font policeTitres = new Font("Arial", Font.PLAIN, 15);
-    /** Police utilisée dans les champs de texte et la légende. */
+
     private final static Font policeSpinnerEtLegende = new Font("Verdana", Font.PLAIN, 10);
-    /** Police utilisée pour le texte des boutons. */
+
     private final static Font policeButton = new Font("Verdana", Font.PLAIN, 15);
-    /** Police utilisée pour le taux de forêt déjà brulée. */
+
     private final static Font policeTauxForetDejaBrulee = new Font("Verdana", Font.BOLD, 12);
-    /** Panneau utilisé dans le menu pour configurer et lancer la simulation. */
+
     private final JPanel northAreaMenu;
-    /** Panneau utilisé dans le menu pour contenir le taux de forêt déjà brulée et la légende de la grille. */
+
     private final JPanel southAreaMenu;
-    /** Champs de texte permettant à l'utilisateur de configurer le nombre de colonnes de la grille. */
+
     private JSpinner colonnesSpinner;
-    /** Champs de texte permettant à l'utilisateur de configurer le nombre de lignes de la grille. */
+
     private JSpinner lignesSpinner;
-    /** Champs de texte permettant à l'utilisateur de configurer la densité en arbres de la grille. */
+
     private JSpinner densiteSpinner;
-    /** Champs de texte permettant à l'utilisateur de configurer la quantité d'arbres sur sol humide de la grille. */
+
     private JSpinner tauxHumiditeSpinner;
-    /** Champs de texte permettant à l'utilisateur de configurer la quantité d'arbres à faible inflammabilité de la grille. */
+
     private JSpinner tauxArbresPeuInflammableSpinner;
-    /** Bouton qui permet de générer une nouvelle grille en prenant en compte les paramètres saisis par l'utilisateur. */
+
     private JButton buttonGenerer;
-    /** Champs de texte permettant à l'utilisateur de choisir la direction du vent à considérer lors de la simulation. */
+
     private JSpinner directionVentSpinner;
-    /** Champs de texte permettant à l'utilisateur de choisir la saison à considérer lors de la simulation. */
+
     private JSpinner saisonSpinner;
-    /** Bouton qui permet de lancer la simulation du feu de forêt. */
+
     private JButton buttonLancer;
-    /** Bouton qui permet d'arrêter ou mettre en pause la simulation du feu de forêt. */
+
     private JButton buttonArreter;
-    /** Label qui contient le pourcentage de forêt brulée au cours de la simulation. */
+
     JLabel tauxTitre;
 
     /**

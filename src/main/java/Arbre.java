@@ -9,21 +9,21 @@ import java.awt.event.*;
  */
 public class Arbre extends Cellule {
 
-    /** Représente la couleur de la cellule si c’est un arbre vivant. */
+
     public static final String COULEUR_ARBRE_VIVANT = "#B6C772";
-    /** Représente la couleur de la cellule si c’est un arbre en feu. */
+
     public static final String COULEUR_ARBRE_EN_FEU = "#F3770F";
-    /** Représente la couleur de la cellule si c’est un arbre en cendre. */
+
     public static final String COULEUR_ARBRE_EN_CENDRE = "#D4D4D4";
-    /** Représente la couleur de l’arbre lorsque celui-ci est placé sur un sol humide. */
+
     public static final String COULEUR_SOL_HUMIDE = "#7F8F57";
-    /** Représente la couleur des bordures de la cellule lorsque celle-ci contient un arbre peu inflammable. */
+
     public static final String COULEUR_PEU_INFLAMMABLE = "#0474BC";
-    /** Représente la couleur de fond des items actifs du menu pop up qui apparait après un click droit sur une cellule. */
+
     public static final String COULEUR_ITEM_POP_UP_MENU_ACTIF = "#A3B8CC";
-    /** Indique si le sol de la cellule est humide ou pas. */
+
     private boolean sol_humide;
-    /** Indique si l’arbre est peu inflammable ou pas. */
+
     private boolean arbre_peu_inflammable;
 
     /**
@@ -213,7 +213,7 @@ public class Arbre extends Cellule {
      */
     private double calculeP(String direction_vent, String saison){
         // Impact du voisinage sur p.
-        double p = 0.8 + this.nombreDeVoisinsEnFeu() * 0.05;
+        double p = 0.6 + this.nombreDeVoisinsEnFeu() * 0.05;
 
         // Impact de la direction du vent sur p.
         if(!this.feuVersCellule(direction_vent) && direction_vent != null) p -= 0.1;
@@ -222,13 +222,13 @@ public class Arbre extends Cellule {
         // Impact de la saison sur p
         if(saison == null){}
         else if(saison.equals("HIVER")) p -= 0.1;
-        else if(saison.equals("ETE")) p += 0.1;
+        else if(saison.equals("ETE")) p += 0.2;
 
         // Impact de l'humidité du sol sur p.
         if(this.solEstHumide()) p -= 0.1;
 
         // Impact du type de végétation sur p.
-        if(this.arbreEstPeuInflammable()) p -= 0.1;
+        if(this.arbreEstPeuInflammable()) p -= 0.2;
 
         // La probabilité doit être comprise en 0 et 1.
         if(p < 0) p = 0;
