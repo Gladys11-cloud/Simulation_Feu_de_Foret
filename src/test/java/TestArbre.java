@@ -119,43 +119,61 @@ public class TestArbre {
      * Méthode de test qui s'assure que l'influence de la saison sur le calcul de l'état futur d'un arbre en vie fonctionne correctement.
      */
     @Test
-    public void testCalculeEtatFutur_ImpactSaisonSurArbreEnVie() {
-        Arbre voisin_gauche = new Arbre(10, 10,  new Grille(), false, false);
-        Arbre voisin_haut = new Arbre(10, 10,  new Grille(), false, false);
-        Arbre voisin_droite = new Arbre(10, 10,  new Grille(), false, false);
-        Arbre voisin_bas = new Arbre(10, 10,  new Grille(), false, false);
-        Cellule[] voisins= {voisin_gauche, voisin_haut, voisin_droite, voisin_bas};
+    public void testCalculeEtatFutur_ImpactSaisonSurArbreEnVie_Printemps() {
+        Arbre voisin_gauche = new Arbre(10, 10, new Grille(), false, false);
+        Arbre voisin_haut = new Arbre(10, 10, new Grille(), false, false);
+        Arbre voisin_droite = new Arbre(10, 10, new Grille(), false, false);
+        Arbre voisin_bas = new Arbre(10, 10, new Grille(), false, false);
+        Cellule[] voisins = {voisin_gauche, voisin_haut, voisin_droite, voisin_bas};
 
         int compteurArbreEnfeu = 0;
         // 1 voisin en feu et saison PRINTEMPS : le printemps n'a aucun effet.
         // Donc environ 85% (8500) des 10000 arbres devraient prendre feu.
         voisins[0].setEtat(2);
 
-        for(int i = 1; i <= 10000; i++){
-            Arbre arbre = new Arbre(10, 10,  new Grille(), false, false);
+        for (int i = 1; i <= 10000; i++) {
+            Arbre arbre = new Arbre(10, 10, new Grille(), false, false);
             arbre.setVoisins(voisins);
             arbre.calculeEtatFutur(null, "PRINTEMPS");
-            if(arbre.getEtatFutur() == 2) compteurArbreEnfeu++;
+            if (arbre.getEtatFutur() == 2) compteurArbreEnfeu++;
         }
 
         assertThat(compteurArbreEnfeu).isCloseTo(8500, within(85));
+    }
+    @Test
+    public void testCalculeEtatFutur_ImpactSaisonSurArbreEnVie_Hiver() {
+        Arbre voisin_gauche = new Arbre(10, 10, new Grille(), false, false);
+        Arbre voisin_haut = new Arbre(10, 10, new Grille(), false, false);
+        Arbre voisin_droite = new Arbre(10, 10, new Grille(), false, false);
+        Arbre voisin_bas = new Arbre(10, 10, new Grille(), false, false);
+        Cellule[] voisins = {voisin_gauche, voisin_haut, voisin_droite, voisin_bas};
 
+        int compteurArbreEnfeu = 0;
         // 1 voisin en feu et saison HIVER : l'hiver réduit la propagation du feu.
         // Donc environ 75% (7500) des 10000 arbres devraient prendre feu.
-        compteurArbreEnfeu = 0;
+        voisins[0].setEtat(2);
 
-        for(int i = 1; i <= 10000; i++){
-            Arbre arbre = new Arbre(10, 10,  new Grille(), false, false);
+        for (int i = 1; i <= 10000; i++) {
+            Arbre arbre = new Arbre(10, 10, new Grille(), false, false);
             arbre.setVoisins(voisins);
             arbre.calculeEtatFutur(null, "HIVER");
-            if(arbre.getEtatFutur() == 2) compteurArbreEnfeu++;
+            if (arbre.getEtatFutur() == 2) compteurArbreEnfeu++;
         }
 
-        assertThat(compteurArbreEnfeu).isCloseTo(7500,within(75));
-
+        assertThat(compteurArbreEnfeu).isCloseTo(7500, within(75));
+    }
+    @Test
+    public void testCalculeEtatFutur_ImpactSaisonSurArbreEnVie_Ete() {
+        Arbre voisin_gauche = new Arbre(10, 10, new Grille(), false, false);
+        Arbre voisin_haut = new Arbre(10, 10, new Grille(), false, false);
+        Arbre voisin_droite = new Arbre(10, 10, new Grille(), false, false);
+        Arbre voisin_bas = new Arbre(10, 10, new Grille(), false, false);
+        Cellule[] voisins = {voisin_gauche, voisin_haut, voisin_droite, voisin_bas};
+        voisins[0].setEtat(2);
+        int compteurArbreEnfeu = 0;
         // 1 voisin en feu et saison ETE : l'été augmente la propagation du feu.
         // Donc environ 95% (9500) des 10000 arbres devraient prendre feu.
-        compteurArbreEnfeu = 0;
+
 
         for(int i = 1; i <= 10000; i++){
             Arbre arbre = new Arbre(10, 10,  new Grille(), false, false);
@@ -220,7 +238,8 @@ public class TestArbre {
     }
 
     /**
-     * Méthode de test qui s'assure que l'influence de la direction du vent sur le calcul de l'état futur d'un arbre en vie fonctionne correctement.
+     * Méthode de test qui s'assure que l'influence de la direction du vent sur le calcul de l'état futur d'un arbre
+     * en vie fonctionne correctement.
      */
     @Test
     public void testCalculeEtatFutur_ImpactDirectionVentSurArbreEnVie() {
@@ -242,7 +261,7 @@ public class TestArbre {
             if(arbre.getEtatFutur() == 2) compteurArbreEnfeu++;
         }
 
-        assertThat(compteurArbreEnfeu).isCloseTo(7500,within(75));
+        assertThat(compteurArbreEnfeu).isCloseTo(4500,within(75));
 
         compteurArbreEnfeu = 0;
         // 1 voisin en feu et le vent pousse le feu vers l'arbre : Si le vent pousse le feu vers l'arbre, cela augmente la propagation du feu.

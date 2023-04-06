@@ -9,13 +9,13 @@ import java.util.Random;
  */
 public class Grille extends JPanel {
 
-    /** Représente la couleur de fond de la grille. */
+
     public static final String COULEUR_FOND_GRILLE = "#F5F5F5";
-    /** Représente le nombre de lignes de la grille */
+
     private int nb_lignes;
-    /** Représente le nombre de colonnes de la grille. */
+
     private int nb_colonnes;
-    /** Tableau à deux dimensions contenant toutes les cellules de la grille. */
+
     private Cellule[][] cellules;
 
     /**

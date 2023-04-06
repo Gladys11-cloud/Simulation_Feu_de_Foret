@@ -6,19 +6,20 @@ import java.awt.*;
  */
 public abstract class Cellule extends JPanel {
 
-    /** Représente la couleur générale des bordures d'une cellule. */
+
     public static final String COULEUR_BORDURE_CELLULE = "#F6E5C6";
-    /** Représente l’état de la cellule (0 → sol nu, 1 → vivant, 2 → en feu, 3 → en cendre). */
+
     protected int etat;
-    /** Représente l’état futur de la cellule à la prochaine itération. */
+
     protected int etat_futur;
-    /** Numéro de ligne ou se trouve la cellule dans la grille. */
+
     protected int x;
-    /** Numéro de colonne ou se trouve la cellule dans la grille. */
+
     protected int y;
-    /** Représente la liste des voisins de la cellule dans l’ordre suivant : [voisin gauche, voisin du haut, voisin de droite, voisin du bas]. */
-    protected Cellule[] voisins;
-    /** Représente la référence de l'objet grille dans lequel se trouve la cellule. */
+
+    protected Cellule[] voisins; // Représente la liste des voisins de la cellule
+    // dans l’ordre suivant : [voisin gauche, voisin du haut, voisin de droite, voisin du bas]
+
     protected Grille grille;
 
     /**

@@ -9,27 +9,27 @@ import java.awt.*;
  */
 public class App extends JFrame {
 
-    /** La grille qui modélise la forêt. */
+
     private Grille grille ;
-    /** Le panneau de défilement qui contient la grille */
+
     private final JScrollPane grilleScrollPane;
-    /** Le panneau contenant le menu de l’application. */
+
     private final Menu menu ;
-    /** La Densité des arbres dans la forêt en pourcentage. */
+
     private int densite;
-    /** La direction du vent : INDIFFERENT, NORD, SUD, EST ou OUEST. */
+
     private String direction_vent;
-    /** La saison: INDIFFERENT, HIVER, PRINTEMPS, ETE ou AUTOMNE. */
+
     private String saison;
-    /** Le taux en pourcentage d’arbres à faible inflammabilité. */
+
     private int tauxArbresPeuInflammables;
-    /** Le taux en pourcentage de cellules ayant un sol humide. */
+
     private int tauxCellulesHumides;
-    /** Le taux en pourcentage de la forêt déjà brulée. */
+
     private double tauxForetDejaBrulee;
-    /** Permet à la méthode lancerSimulation() de savoir si l’utilisateur a cliqué sur le bouton « Arrêter ». True si oui et False sinon. */
+
     private boolean stopSimulation;
-    /** Indique si une simulation en cours. True si oui et false sinon. */
+
     private boolean simulationEnCours;
     /**
      * Constructeur de la classe App qui crée une nouvelle instance d'App.
