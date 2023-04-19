@@ -128,24 +128,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>private <a href="Cellule.html" title="class in Unnamed Package">Cellule</a>[][]</code></div>
 <div class="col-second even-row-color"><code><a href="#cellules" class="member-name-link">cellules</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">Tableau à deux dimensions contenant toutes les cellules de la grille.</div>
-</div>
+<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#COULEUR_FOND_GRILLE" class="member-name-link">COULEUR_FOND_GRILLE</a></code></div>
-<div class="col-last odd-row-color">
-<div class="block">Représente la couleur de fond de la grille.</div>
-</div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>private int</code></div>
 <div class="col-second even-row-color"><code><a href="#nb_colonnes" class="member-name-link">nb_colonnes</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">Représente le nombre de colonnes de la grille.</div>
-</div>
+<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>private int</code></div>
 <div class="col-second odd-row-color"><code><a href="#nb_lignes" class="member-name-link">nb_lignes</a></code></div>
-<div class="col-last odd-row-color">
-<div class="block">Représente le nombre de lignes de la grille</div>
-</div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-javax.swing.JComponent">Fields inherited from class&nbsp;javax.swing.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/javax/swing/JComponent.html" title="class or interface in javax.swing" class="external-link">JComponent</a></h3>
@@ -195,66 +187,71 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Renvoie la liste des voisins de la cellule (i, j).</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#construireGrille(int,int,int,int,int)" class="member-name-link">construireGrille</a><wbr>(int&nbsp;nbLignes,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#celluleEnFeu()" class="member-name-link">celluleEnFeu</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Methode pour determiner si des cellules sont en feu dans la grille</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#construireGrille(int,int,int,int,int)" class="member-name-link">construireGrille</a><wbr>(int&nbsp;nbLignes,
  int&nbsp;nbColonnes,
  int&nbsp;densite,
  int&nbsp;tauxCellulesHumides,
  int&nbsp;tauxArbresPeuInflammables)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Méthode qui permet d'initialiser de façon aléatoire la grille avec un nombre de colonnes et de lignes, une densité,
  un pourcentage de cellules humides et un pourcentage d’arbres peu inflammable fournis en paramètre.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dansGrille(int,int)" class="member-name-link">dansGrille</a><wbr>(int&nbsp;i,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dansGrille(int,int)" class="member-name-link">dansGrille</a><wbr>(int&nbsp;i,
  int&nbsp;j)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Méthode qui permet de vérifier si la cellule de coordonnées (i, j) fait partie la grille.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Cellule.html" title="class in Unnamed Package">Cellule</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCellule(int,int)" class="member-name-link">getCellule</a><wbr>(int&nbsp;i,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Cellule.html" title="class in Unnamed Package">Cellule</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCellule(int,int)" class="member-name-link">getCellule</a><wbr>(int&nbsp;i,
  int&nbsp;j)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Méthode qui renvoie la cellule située dans la case (i, j) de la grille.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNbColonnes()" class="member-name-link">getNbColonnes</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNbColonnes()" class="member-name-link">getNbColonnes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Méthode qui renvoie le nombre de colonnes de la grille.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNbLignes()" class="member-name-link">getNbLignes</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNbLignes()" class="member-name-link">getNbLignes</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Méthode qui renvoie le nombre de lignes de la grille.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#remplacerCellule(int,int,Cellule)" class="member-name-link">remplacerCellule</a><wbr>(int&nbsp;i,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#remplacerCellule(int,int,Cellule)" class="member-name-link">remplacerCellule</a><wbr>(int&nbsp;i,
  int&nbsp;j,
  <a href="Cellule.html" title="class in Unnamed Package">Cellule</a>&nbsp;cellule)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Méthode qui permet de remplacer la cellule dans la case (i, j) de la grille par une autre.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCellule(int,int,Cellule)" class="member-name-link">setCellule</a><wbr>(int&nbsp;i,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCellule(int,int,Cellule)" class="member-name-link">setCellule</a><wbr>(int&nbsp;i,
  int&nbsp;j,
  <a href="Cellule.html" title="class in Unnamed Package">Cellule</a>&nbsp;cellule)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Méthode qui permet d’insérer une cellule dans la case (i, j) de la grille.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setNbColonnes(int)" class="member-name-link">setNbColonnes</a><wbr>(int&nbsp;nbColonnes)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setNbColonnes(int)" class="member-name-link">setNbColonnes</a><wbr>(int&nbsp;nbColonnes)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Méthode qui permet de modifier le nombre de colonnes de la grille.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setNbLignes(int)" class="member-name-link">setNbLignes</a><wbr>(int&nbsp;nbLignes)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setNbLignes(int)" class="member-name-link">setNbLignes</a><wbr>(int&nbsp;nbLignes)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Méthode qui permet de modifier le nombre de lignes de la grille.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#simulation(java.lang.String,java.lang.String)" class="member-name-link">simulation</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;direction_vent,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#simulation(java.lang.String,java.lang.String)" class="member-name-link">simulation</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;direction_vent,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;saison)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Méthode qui passe en revue toutes les cellules de la grille et calcule leur état futur.</div>
 </div>
 </div>
@@ -290,7 +287,6 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="COULEUR_FOND_GRILLE">
 <h3>COULEUR_FOND_GRILLE</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">COULEUR_FOND_GRILLE</span></div>
-<div class="block">Représente la couleur de fond de la grille.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -305,21 +301,18 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="nb_lignes">
 <h3>nb_lignes</h3>
 <div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">nb_lignes</span></div>
-<div class="block">Représente le nombre de lignes de la grille</div>
 </section>
 </li>
 <li>
 <section class="detail" id="nb_colonnes">
 <h3>nb_colonnes</h3>
 <div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">nb_colonnes</span></div>
-<div class="block">Représente le nombre de colonnes de la grille.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="cellules">
 <h3>cellules</h3>
 <div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="Cellule.html" title="class in Unnamed Package">Cellule</a>[][]</span>&nbsp;<span class="element-name">cellules</span></div>
-<div class="block">Tableau à deux dimensions contenant toutes les cellules de la grille.</div>
 </section>
 </li>
 </ul>
@@ -506,6 +499,17 @@ loadScripts(document, 'script');</script>
 <h3>actualiser</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">actualiser</span>()</div>
 <div class="block">Méthode qui permet de basculer toutes les cellules de la grille dans leur état futur.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="celluleEnFeu()">
+<h3>celluleEnFeu</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">celluleEnFeu</span>()</div>
+<div class="block">Methode pour determiner si des cellules sont en feu dans la grille</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>True si au moins un arbre est en feu. Retourne Faux autrement.</dd>
+</dl>
 </section>
 </li>
 </ul>
