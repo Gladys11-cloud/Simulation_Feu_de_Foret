@@ -408,7 +408,7 @@ public class Menu extends JPanel {
                             app.lancerSimulation();
                         }else{
                             JOptionPane.showMessageDialog(null,
-                                    "Veuillez selectionner une cellule a mettre en feu.");
+                                    "Veuillez selectionner une cellule a mettre en feu.\n (Il faut cliquer sur au moins une cellule)");
                             activerBoutonLancer(true);
                         }
                     }
