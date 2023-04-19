@@ -19,9 +19,11 @@ test {
     useJUnitPlatform()
 }
 
+
 javadoc {
     options.addStringOption('Xdoclint:none', '-quiet')
     options.addStringOption('private', '-quiet')
     options.destinationDirectory(file("/docs/doc_technique"))
     options.encoding = 'UTF-8'
 }
+
