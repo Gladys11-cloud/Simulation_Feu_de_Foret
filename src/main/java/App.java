@@ -185,7 +185,13 @@ public class App extends JFrame {
     public void setTauxArbresPeuInflammables(int tauxArbresPeuInflammables) {
         this.tauxArbresPeuInflammables = tauxArbresPeuInflammables;
     }
-
+    /**
+     * Methode pour determiner si des cellules de la grille sont en feu dans la grille
+     * @return True si au moins un arbre est en feu. Retourne Faux autrement.
+     */
+    public boolean cellulesEnFeu(){
+        return grille.celluleEnFeu();
+    }
     /**
      * Setter de l'attribut "tauxCellulesHumides".
      *

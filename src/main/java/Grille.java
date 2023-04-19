@@ -242,4 +242,18 @@ public class Grille extends JPanel {
             }
         }
     }
+    /**
+     * Methode pour determiner si des cellules sont en feu dans la grille
+     * @return True si au moins un arbre est en feu. Retourne Faux autrement.
+     */
+    public boolean celluleEnFeu(){
+        for(int i = 0; i < this.nb_lignes; i++) {
+            for( int j = 0; j < this.nb_colonnes; j++) {
+                Cellule cellule = this.getCellule(i, j);
+                if(cellule.getEtat()==2)
+                    return true;
+            }
+        }
+        return false;
+    }
 }

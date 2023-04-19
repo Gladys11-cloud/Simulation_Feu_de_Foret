@@ -404,7 +404,13 @@ public class Menu extends JPanel {
                         activerBoutonGenerer(false);
                         activerBoutonLancer(false);
                         activerBoutonArreter(true);
-                        app.lancerSimulation();
+                        if(uneCelleEnFeu()){
+                            app.lancerSimulation();
+                        }else{
+                            JOptionPane.showMessageDialog(null,
+                                    "Veuillez selectionner une cellule a mettre en feu.");
+                            activerBoutonLancer(true);
+                        }
                     }
                     else
                         activerBoutonLancer(false);
@@ -703,6 +709,9 @@ public class Menu extends JPanel {
             this.buttonArreter.setBackground(Color.decode(COULEUR_BOUTON_ARRETER_ACTIF));
         else
             this.buttonArreter.setBackground(Color.decode(COULEUR_BOUTON_ARRETER_NON_ACTIF));
+    }
+    private boolean uneCelleEnFeu(){
+        return this.app.cellulesEnFeu();
     }
 }
 
