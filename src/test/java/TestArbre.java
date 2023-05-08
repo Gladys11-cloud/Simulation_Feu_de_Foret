@@ -88,31 +88,23 @@ public class TestArbre {
         Arbre voisin_bas = new Arbre(10, 10,  new Grille(), false, false);
         Cellule[] voisins= {voisin_gauche, voisin_haut, voisin_droite, voisin_bas};
 
-        int compteurArbreEnfeu = 0;
-        // 1 seul voisin en feu : environ 65% (6500) des 10000 arbres devraient prendre feu.
+        // 1 seul voisin en feu (+5%)
+        // La probabilité initiale étant de 60%, l'arbre a 60+5=65% de chances de prendre feu.
         voisins[0].setEtat(2);
+        Arbre arbre = new Arbre(10, 10,  new Grille(), false, false);
+        arbre.setVoisins(voisins);
+        double p = arbre.calculeP(null, null);
 
-        for(int i = 1; i <= 10000; i++){
-            Arbre arbre = new Arbre(10, 10,  new Grille(), false, false);
-            arbre.setVoisins(voisins);
-            arbre.calculeEtatFutur(null, null);
-            if(arbre.getEtatFutur() == 2) compteurArbreEnfeu++;
-        }
+        assertThat((int)(p*100)).isEqualTo(65);
 
-        assertThat(compteurArbreEnfeu).isCloseTo(6500,within(65));
-
-        // Tous les 4 voisins en feu : 80% (8000) des 10000 arbres devraient prendre feu.
+        // Tous les 4 voisins en feu (+4*5%)
+        // La probabilité initiale étant de 60%, l'arbre a 60+5+5+5+5=80% de chances de prendre feu.
         voisins[1].setEtat(2); voisins[2].setEtat(2); voisins[3].setEtat(2);
-        compteurArbreEnfeu = 0;
+        arbre = new Arbre(10, 10,  new Grille(), false, false);
+        arbre.setVoisins(voisins);
+        p = arbre.calculeP(null, null);
 
-        for(int i = 1; i <= 10000; i++){
-            Arbre arbre = new Arbre(10, 10,  new Grille(), false, false);
-            arbre.setVoisins(voisins);
-            arbre.calculeEtatFutur(null, null);
-            if(arbre.getEtatFutur() == 2) compteurArbreEnfeu++;
-        }
-
-        assertThat(compteurArbreEnfeu).isCloseTo(8000,within(80));
+        assertThat((int)(p*100)).isEqualTo(80);
     }
 
     /**
@@ -126,20 +118,16 @@ public class TestArbre {
         Arbre voisin_bas = new Arbre(10, 10, new Grille(), false, false);
         Cellule[] voisins = {voisin_gauche, voisin_haut, voisin_droite, voisin_bas};
 
-        int compteurArbreEnfeu = 0;
-        // 1 voisin en feu et saison PRINTEMPS : le printemps n'a aucun effet.
-        // Donc environ 65% (6500) des 10000 arbres devraient prendre feu.
+        // 1 voisin en feu (+5%) et saison PRINTEMPS. Cela n'a aucun effet sur la propagation du feu.
+        // La probabilité initiale étant de 60%, l'arbre a 60+5=65% de chances de prendre feu.
         voisins[0].setEtat(2);
+        Arbre arbre = new Arbre(10, 10,  new Grille(), false, false);
+        arbre.setVoisins(voisins);
+        double p = arbre.calculeP(null, "PRINTEMPS");
 
-        for (int i = 1; i <= 10000; i++) {
-            Arbre arbre = new Arbre(10, 10, new Grille(), false, false);
-            arbre.setVoisins(voisins);
-            arbre.calculeEtatFutur(null, "PRINTEMPS");
-            if (arbre.getEtatFutur() == 2) compteurArbreEnfeu++;
-        }
-
-        assertThat(compteurArbreEnfeu).isCloseTo(6500, within(65));
+        assertThat((int)(p*100)).isEqualTo(65);
     }
+
     @Test
     public void testCalculeEtatFutur_ImpactSaisonSurArbreEnVie_Hiver() {
         Arbre voisin_gauche = new Arbre(10, 10, new Grille(), false, false);
@@ -148,20 +136,16 @@ public class TestArbre {
         Arbre voisin_bas = new Arbre(10, 10, new Grille(), false, false);
         Cellule[] voisins = {voisin_gauche, voisin_haut, voisin_droite, voisin_bas};
 
-        int compteurArbreEnfeu = 0;
-        // 1 voisin en feu et saison HIVER : l'hiver réduit la propagation du feu.
-        // Donc environ 55% (5500) des 10000 arbres devraient prendre feu.
+        // 1 voisin en feu (+5%) et saison HIVER. Cela réduit la propagation du feu de 10%.
+        // La probabilité initiale étant de 60%, l'arbre a 60+5-10=55% de chances de prendre feu.
         voisins[0].setEtat(2);
+        Arbre arbre = new Arbre(10, 10,  new Grille(), false, false);
+        arbre.setVoisins(voisins);
+        double p = arbre.calculeP(null, "HIVER");
 
-        for (int i = 1; i <= 10000; i++) {
-            Arbre arbre = new Arbre(10, 10, new Grille(), false, false);
-            arbre.setVoisins(voisins);
-            arbre.calculeEtatFutur(null, "HIVER");
-            if (arbre.getEtatFutur() == 2) compteurArbreEnfeu++;
-        }
-
-        assertThat(compteurArbreEnfeu).isCloseTo(5500, within(55));
+        assertThat((int)(p*100)).isEqualTo(55);
     }
+
     @Test
     public void testCalculeEtatFutur_ImpactSaisonSurArbreEnVie_Ete() {
         Arbre voisin_gauche = new Arbre(10, 10, new Grille(), false, false);
@@ -169,20 +153,15 @@ public class TestArbre {
         Arbre voisin_droite = new Arbre(10, 10, new Grille(), false, false);
         Arbre voisin_bas = new Arbre(10, 10, new Grille(), false, false);
         Cellule[] voisins = {voisin_gauche, voisin_haut, voisin_droite, voisin_bas};
+
+        // 1 voisin en feu (+5%) et saison ETE. Cela augmente la propagation du feu de 20%.
+        // La probabilité initiale étant de 60%, l'arbre a 60+5+20=85% de chances de prendre feu.
         voisins[0].setEtat(2);
-        int compteurArbreEnfeu = 0;
-        // 1 voisin en feu et saison ETE : l'été augmente la propagation du feu.
-        // Donc environ 85% (8500) des 10000 arbres devraient prendre feu.
+        Arbre arbre = new Arbre(10, 10,  new Grille(), false, false);
+        arbre.setVoisins(voisins);
+        double p = arbre.calculeP(null, "ETE");
 
-
-        for(int i = 1; i <= 10000; i++){
-            Arbre arbre = new Arbre(10, 10,  new Grille(), false, false);
-            arbre.setVoisins(voisins);
-            arbre.calculeEtatFutur(null, "ETE");
-            if(arbre.getEtatFutur() == 2) compteurArbreEnfeu++;
-        }
-
-        assertThat(compteurArbreEnfeu).isCloseTo(8500,within(85));
+        assertThat((int)(p*100)).isEqualTo(85);
     }
 
     /**
@@ -196,19 +175,14 @@ public class TestArbre {
         Arbre voisin_bas = new Arbre(10, 10,  new Grille(), false, false);
         Cellule[] voisins= {voisin_gauche, voisin_haut, voisin_droite, voisin_bas};
 
-        int compteurArbreEnfeu = 0;
-        // 1 voisin en feu et sol humide : l'humidité du sol réduit la propagation du feu.
-        // Donc environ 55% (5500) des 10000 arbres devraient prendre feu.
+        // 1 voisin en feu (+5%) et sol humide. Cela réduit la propagation du feu de 10%.
+        // La probabilité initiale étant de 60%, l'arbre a 60+5-10=55% de chances de prendre feu.
         voisins[0].setEtat(2);
+        Arbre arbre = new Arbre(10, 10,  new Grille(), true, false);
+        arbre.setVoisins(voisins);
+        double p = arbre.calculeP(null, null);
 
-        for(int i = 1; i <= 10000; i++){
-            Arbre arbre = new Arbre(10, 10,  new Grille(), true, false);
-            arbre.setVoisins(voisins);
-            arbre.calculeEtatFutur(null, null);
-            if(arbre.getEtatFutur() == 2) compteurArbreEnfeu++;
-        }
-
-        assertThat(compteurArbreEnfeu).isCloseTo(5500,within(55));
+        assertThat((int)(p*100)).isEqualTo(55);
     }
 
     /**
@@ -222,19 +196,14 @@ public class TestArbre {
         Arbre voisin_bas = new Arbre(10, 10,  new Grille(), false, false);
         Cellule[] voisins= {voisin_gauche, voisin_haut, voisin_droite, voisin_bas};
 
-        int compteurArbreEnfeu = 0;
-        // 1 voisin en feu et arbre peu inflammable : Si l'arbre est peu inflammable, cela réduit la propagation du feu.
-        // Donc environ 55% (5500) des 10000 arbres devraient prendre feu.
+        // 1 voisin en feu (+5%) et arbre peu inflammable. Si l'arbre est peu inflammable, cela réduit la propagation du feu de 20%.
+        // La probabilité initiale étant de 60%, l'arbre a 60+5-20=45% de chances de prendre feu.
         voisins[0].setEtat(2);
+        Arbre arbre = new Arbre(10, 10,  new Grille(), false, true);
+        arbre.setVoisins(voisins);
+        double p = arbre.calculeP(null, null);
 
-        for(int i = 1; i <= 10000; i++){
-            Arbre arbre = new Arbre(10, 10,  new Grille(), false, true);
-            arbre.setVoisins(voisins);
-            arbre.calculeEtatFutur(null, null);
-            if(arbre.getEtatFutur() == 2) compteurArbreEnfeu++;
-        }
-
-        assertThat(compteurArbreEnfeu).isCloseTo(4500,within(45));
+        assertThat((int)(p*100)).isEqualTo(45);
     }
 
     /**
@@ -249,32 +218,22 @@ public class TestArbre {
         Arbre voisin_bas = new Arbre(10, 10,  new Grille(), false, false);
         Cellule[] voisins= {voisin_gauche, voisin_haut, voisin_droite, voisin_bas};
 
-        int compteurArbreEnfeu = 0;
-        // 1 voisin en feu et le vent pousse le feu ailleurs que vers l'arbre : Si le vent pousse le feu ailleurs que vers l'arbre, cela réduit la propagation du feu.
-        // Donc environ 55% (5500) des 10000 arbres devraient prendre feu.
+        // 1 voisin en feu (+5%) et le vent pousse le feu ailleurs que vers l'arbre. Cela réduit la propagation du feu de 10%.
+        // La probabilité initiale étant de 60%, l'arbre a 60+5-10=55% de chances de prendre feu.
         voisins[0].setEtat(2);
+        Arbre arbre = new Arbre(10, 10,  new Grille(), false, false);
+        arbre.setVoisins(voisins);
+        double p = arbre.calculeP("NORD", null);
 
-        for(int i = 1; i <= 10000; i++){
-            Arbre arbre = new Arbre(10, 10,  new Grille(), false, false);
-            arbre.setVoisins(voisins);
-            arbre.calculeEtatFutur("NORD", null);
-            if(arbre.getEtatFutur() == 2) compteurArbreEnfeu++;
-        }
+        assertThat((int)(p*100)).isEqualTo(55);
 
-        assertThat(compteurArbreEnfeu).isCloseTo(5500,within(55));
+        // 1 voisin en feu (+5%) et le vent pousse le feu vers l'arbre. Cela augmente la propagation du feu de 50%.
+        // La probabilité initiale étant de 60%, l'arbre a 60+5+50=100% de chances de prendre feu.
+        arbre = new Arbre(10, 10,  new Grille(), false, false);
+        arbre.setVoisins(voisins);
+        p = arbre.calculeP("EST", null);
 
-        compteurArbreEnfeu = 0;
-        // 1 voisin en feu et le vent pousse le feu vers l'arbre : Si le vent pousse le feu vers l'arbre, cela augmente la propagation du feu.
-        // Donc environ 100% (10000) des 10000 arbres devraient prendre feu.
-
-        for(int i = 1; i <= 10000; i++){
-            Arbre arbre = new Arbre(10, 10,  new Grille(), false, false);
-            arbre.setVoisins(voisins);
-            arbre.calculeEtatFutur("EST", null);
-            if(arbre.getEtatFutur() == 2) compteurArbreEnfeu++;
-        }
-
-        assertThat(compteurArbreEnfeu).isEqualTo(10000);
+        assertThat((int)(p*100)).isEqualTo(100);
     }
 
     /**

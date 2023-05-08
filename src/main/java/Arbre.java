@@ -211,7 +211,7 @@ public class Arbre extends Cellule {
      * @param direction_vent La direction courante du vent (NORD, SUD, EST, OUEST).
      * @param saison La saison courante (HIVER, PRINTEMPS, ETE, AUTOMNE).
      */
-    private double calculeP(String direction_vent, String saison){
+    public double calculeP(String direction_vent, String saison){
         // Impact du voisinage sur p.
         double p = 0.6 + this.nombreDeVoisinsEnFeu() * 0.05;
 
