@@ -29,6 +29,6 @@ Il contient la méthode main du projet.
 * Au pied du menu, il est possible de voir le pourcentage d'arbres déjà brulés ainsi qu'une légende expliquant le code couleur utilisé dans l'application.
 
 ## Documentation
-Le rapport en format pdf de ce projet est accessible à l'adresse [```docs/```](docs/).
+Le rapport en format pdf de ce projet est accessible à l'adresse [```docs/rapport/Simulation_feu_de_foret_Automates_cellulaires.pdf```](docs/rapport/Simulation_feu_de_foret_Automates_cellulaires.pdf).
 
 Tandis que La documentation technique en format `html` est accessible à l'adresse [```docs/doc_technique/package-summary.html```](docs/doc_technique/package-summary.html).

@@ -1,0 +1,49 @@
+\section{Quelques concepts théoriques}
+
+Dans cette partie, nous aborderons quelques concepts théoriques nécessaires à la compréhension de notre cas d'étude de simulation graphique d'un feu de forêt avec le langage Java. Nous commencerons par explorer le concept d'automate cellulaire, qui est une méthode de modélisation mathématique utilisée pour simuler des systèmes complexes tels que les feux de forêt. Ensuite, nous parlerons du diagramme de \textit{\textit{Gantt} }, un outil de gestion de projet qui nous permettra de planifier les différentes tâches à réaliser pour mener à bien notre projet. Nous aborderons également le langage de modélisation unifiée (UML) qui sera utilisé pour établir une modélisation informatique de notre projet. Nous verrons également l'importance de \textit{Git}, un système de contrôle de version qui facilite le travail collaboratif sur un projet. Enfin, nous étudierons le langage de programmation \textit{Java}, qui sera utilisé pour mettre en œuvre la simulation graphique du feu de forêt.
+
+\subsection{Automate cellulaire}
+
+Les automates cellulaires sont des modèles mathématiques permettant de simuler des phénomènes qui se déroulent dans des espaces discrets.\parencite{wuensche2000cellular} Ils sont largement utilisés dans la modélisation de systèmes complexes tels que la météorologie, l'écologie, la biologie et la physique. Dans notre cas d'étude, nous utiliserons les automates cellulaires pour simuler l'évolution d'un feu de forêt en fonction de différents paramètres tels que le vent, l'humidité, le type de végétation et le climat.
+
+Le voisinage de \textit{Von Neumann} est l'une des méthodes les plus courantes pour la modélisation de l'environnement à travers les automates cellulaires.\parencite{franceschini2020cellular} Cette méthode suppose que chaque cellule est en contact avec ses quatre voisins immédiats : en haut, en bas, à gauche et à droite. La règle de transition est alors appliquée à chaque cellule en fonction de l'état de ses voisins. Pour notre simulation de feu de forêt, le voisinage de \textit{Von Neumann} nous permettra de prendre en compte l'influence des cellules environnantes sur le comportement du feu.
+
+L'utilisation des automates cellulaires et du voisinage de \textit{Von Neumann} nous permettra de simuler de manière réaliste l'évolution d'un feu de forêt et d'analyser l'impact de différents facteurs tels que la direction du vent, l'humidité du sol, le type de végétation et le climat sur la propagation du feu.
+
+\subsection{Diagramme de \textit{Gantt}}
+
+Le diagramme de \textit{Gantt} est un outil de gestion de projet utilisé pour visualiser les différentes tâches à effectuer dans le cadre d'un projet et leur durée respective. Il permet de planifier les différentes étapes du projet et de suivre l'avancement des tâches. Le diagramme de \textit{Gantt} est un outil très utilisé dans le monde de l'entreprise et du management, mais il peut également être utile dans des projets personnels ou académiques \parencite{gantt1916work}.
+
+Le diagramme de \textit{Gantt} a été inventé par Henry \textit{Gantt} au début du 20ème siècle et a été initialement utilisé pour planifier les activités de production dans les usines. Depuis lors, il a été adapté pour être utilisé dans une grande variété de projets et d'industries. Le diagramme de \textit{Gantt} est un outil simple mais efficace pour planifier les tâches et gérer les délais \parencite{lesikar2003basic}.
+
+Dans le cadre de ce projet, nous avons utilisé le diagramme de \textit{Gantt} pour planifier les différentes étapes de notre simulation de feu de forêt. Nous avons commencé par identifier les tâches à effectuer, telles que la modélisation mathématique du problème, la création de l'interface utilisateur, la mise en place de l'algorithme de simulation, etc. Ensuite, nous avons estimé la durée de chaque tâche et nous avons organisé ces tâches dans une chronologie cohérente.
+L'utilisation du diagramme de \textit{Gantt} nous a permis de suivre l'avancement du projet et de nous assurer que nous étions en mesure de respecter les délais impartis. Nous avons également été en mesure de détecter des retards potentiels dans le projet et de prendre des mesures pour les éviter.
+
+Dans l'ensemble, le diagramme de \textit{Gantt} a été un outil très utile pour la gestion de notre projet de simulation de feu de forêt. Nous recommandons son utilisation pour toute personne impliquée dans la gestion de projets, qu'ils soient personnels ou professionnels.
+
+%\image{assets/images/1.bpmn.png}{Titre de la figure 1}{figure1}
+
+\subsection{UML}
+
+UML (Unified Modeling Language) est un langage de modélisation visuelle utilisé pour spécifier, visualiser, concevoir et documenter les artefacts d'un système logiciel.\parencite{omg-uml} UML est largement utilisé dans l'industrie du développement de logiciels pour représenter graphiquement les modèles conceptuels de systèmes logiciels. Les diagrammes UML représentent les différents aspects d'un système, tels que les exigences fonctionnelles, l'architecture logicielle, les interactions entre les composants, les processus métier, etc.
+
+L'UML est donc un langage de modélisation très utilisé dans le domaine du développement de logiciels. Il est possible de créer plusieurs types de diagrammes UML, comme le diagramme de classes, le diagramme de cas d'utilisation, le diagramme de séquence, le diagramme de collaboration, etc. Cependant, pour notre simulation, nous nous sommes concentrés sur le diagramme de classes, qui permet de représenter les classes et leurs relations dans un système.
+
+Le diagramme de classes est donc un outil essentiel pour décrire la structure d'un système orienté objet. Il permet de représenter les classes et leurs relations sous forme de boîtes reliées entre elles par des flèches, représentant les relations entre les classes. Les classes sont représentées par des rectangles, contenant le nom de la classe, les attributs et les méthodes de la classe. Les relations entre les classes sont représentées par des flèches, qui peuvent être unidirectionnelles ou bidirectionnelles. Les flèches unidirectionnelles indiquent que la relation ne va que dans un sens, tandis que les flèches bidirectionnelles indiquent que la relation va dans les deux sens.
+
+
+\subsection{Git}
+
+Git est un système de contrôle de version très populaire pour le développement de logiciels. Il permet à plusieurs développeurs de travailler ensemble sur un même projet, tout en conservant un historique de toutes les modifications apportées au code \parencite{chacon2014pro}. Git utilise une approche décentralisée, dans laquelle chaque développeur possède une copie locale du code source. Les modifications apportées par chaque développeur sont enregistrées localement, puis peuvent être partagées avec les autres développeurs via un référentiel Git centralisé. Git permet également de fusionner facilement les modifications apportées par différents développeurs, ce qui facilite la collaboration.
+
+Pour notre projet de simulation de feu de forêt, nous avons utilisé Git pour gérer le code source et faciliter la collaboration entre les membres de l'équipe de développement. Nous avons créé un référentiel Git centralisé, sur lequel chaque membre de l'équipe a travaillé localement en utilisant une branche dédiée. Nous avons utilisé les commandes Git de base pour gérer les modifications apportées au code source, notamment pour ajouter, modifier, supprimer et fusionner les fichiers.
+
+En utilisant Git, nous avons pu conserver un historique de toutes les modifications apportées au code source de notre projet de simulation de feu de forêt. Cela nous a permis de revenir à des versions précédentes du code en cas de problèmes, ainsi que de travailler simultanément sur différentes fonctionnalités sans risquer de perdre des modifications importantes.
+
+\subsection{Java}
+
+Java est un langage de programmation orienté objet largement utilisé dans le développement d'applications pour les ordinateurs, les téléphones mobiles et autres appareils électroniques. Il a été créé en 1995 par James Gosling chez Sun Microsystems, qui a depuis été acquis par Oracle. Java est devenu populaire en raison de sa portabilité, c'est-à-dire sa capacité à fonctionner sur plusieurs plates-formes, comme Windows, Mac OS et Linux. Cela est possible grâce à l'utilisation de la machine virtuelle Java (JVM), qui permet d'exécuter le code Java sur différents systèmes d'exploitation.
+
+Java est souvent utilisé pour développer des applications de bureau, des applications Web et des jeux vidéo. Il dispose également d'une grande communauté de développeurs et de nombreuses bibliothèques open source, telles que Spring, Hibernate et Apache Struts, qui facilitent et accélèrent le développement d'applications.
+
+En ce qui concerne le développement de la simulation de feu de forêt, Java est un choix judicieux car il permet de créer facilement une interface graphique pour afficher la simulation en temps réel. De plus, le langage est suffisamment puissant pour permettre une manipulation facile des automates cellulaires et des calculs mathématiques nécessaires à la simulation.

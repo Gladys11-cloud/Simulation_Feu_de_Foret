@@ -1,0 +1,67 @@
+% Définition de la classe et des paramètres principaux
+\documentclass[12pt, letterpaper, table, xcdraw]{model}
+
+% Utilisation du package pour importer des fichiers
+\usepackage{import}
+% Importation de styles
+\usepackage{styles}
+\usepackage{subcaption}
+% Modifier les styles d'index et de liste
+\renewcommand{\cftdotsep}{4}
+\renewcommand{\cftfigpresnum}{\bfseries Figure }
+\cftsetindents{figure}{0em}{5.5em}
+\renewcommand{\cfttabpresnum}{\bfseries Tableau }
+\cftsetindents{table}{0em}{5.5em}
+% L'indentation de 1 cm est définie
+\setlength{\parindent}{1cm}
+
+\usepackage{listings}
+
+\lstset{
+    language=Java,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{blue},
+    commentstyle=\itshape\color{green!40!black},
+    stringstyle=\color{orange},
+    showstringspaces=false,
+    breaklines=true,
+    captionpos=b
+}
+
+\begin{document}
+
+  % Couverture
+  \import{common/}{couverture.tex}
+  \clearpage
+
+  % Sommaire
+  \import{content/}{(1)-sommaire.tex}
+  \clearpage
+
+  \import{content/}{(2)-figures_et_tables.tex}
+  \clearpage
+  
+  \import{content/}{(3)-introduction.tex}
+  \clearpage
+
+  % Contenu
+  \import{content/sections/}{1-Revue_littérature.tex}
+  \clearpage
+
+  \import{content/sections/}{2-concepts_théoriques.tex}
+  \clearpage
+
+  \import{content/sections/}{3-cas_d_étude.tex}
+  \clearpage
+
+  % Conclusion
+  \import{content/}{(4)-conclusion.tex}
+  \clearpage
+  
+  \import{content/}{(5)-bibliographie.tex}
+  \clearpage
+  
+  \import{content/}{(6)-annexes.tex}
+  \clearpage
+
+\end{document}
