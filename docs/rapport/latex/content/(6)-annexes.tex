@@ -6,10 +6,96 @@
 \phantomsection
 \addcontentsline{toc}{section}{Annexes}
 
-\section{Autre diagramme de classe proposé par l'équipe 1}
+\section{Design de l'interface graphique}
+\label{sec:annexe1}
+\image{assets/images/Proposition_Interface_Graphique_feu_de_foret.png}{Design Figma de l’interface graphique}{designFigma}{1}
+\newpage
+\section{Interface graphique implementé}
+\label{sec:annexe2}
+\image{assets/images/Interface_Graphique_Implémentée.jpg}{Interface graphique réellement implémenté}{interfaceRélle}{0.80}
+\newpage
+\section{Algorithme de la boucle de simulation}
+\label{sec:annexe3}
 
-\image{assets/images/autres_diagramme_de_classe_proposé_1.png}{Version finale du diagramme de classes}{umlProposition1}{1}
+\begin{figure}[htbp]
+    \centering
+    \begin{lstlisting}
+    public double[] simulation(String direction_vent, String saison){
+        double continuerSimulation = 0;
+        double nombreTotalArbre = 0;
+        double nombreArbreEnCendre = 0;
 
-\section{Autre diagramme de classe proposé par l'équipe 2}
+        for(int i = 0; i < this.nb_lignes; i++) {
+            for( int j = 0; j < this.nb_colonnes; j++) {
+                Cellule cellule = this.getCellule(i, j);
+                cellule.calculeEtatFutur(direction_vent, saison);
+                if(cellule.getEtatFutur() == 2) continuerSimulation = 1;
+                if(cellule.getEtat() == 1 || cellule.getEtat() == 2 || cellule.getEtat() == 3) nombreTotalArbre += 1;
+                if(cellule.getEtat() == 3 || cellule.getEtatFutur() == 3) nombreArbreEnCendre += 1;
+            }
+        }
 
-\image{assets/images/autres_diagramme_de_classe_proposé_2.png}{Autre diagramme de classe proposé par l'équipe 2}{umlProposition2}{1}
+        return new double[]{continuerSimulation, ((nombreArbreEnCendre/nombreTotalArbre)*100)};
+    }
+    \end{lstlisting}
+    \caption{Code de la méthode \texttt{Grille.simulation()}}
+    \label{fig:boucleSimulation}
+\end{figure}
+\newpage
+\section{Algorithme de calcul de l’état futur d’une cellule}
+\label{sec:annexe4}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{lstlisting}
+    @Override
+    public void calculeEtatFutur(String direction_vent, String saison){
+        // p : probabilité de propagation du feu vers la cellule
+        double p;
+
+        if(this.etat == 3) this.etat_futur = etat;
+        else if(this.etat == 2) this.etat_futur = 3;
+        else if(this.etat == 1){
+            if(this.nombreDeVoisinsEnFeu() == 0) this.etat_futur = this.etat;
+            else{
+                p = this.calculeP(direction_vent, saison);
+                if(this.feuVaSePropager(p)) this.etat_futur = 2;
+                else this.etat_futur = etat;
+            }
+        }
+    }
+    \end{lstlisting}
+    \caption{Code de la méthode \texttt{Arbre.calculeEtatFutur()}}
+    \label{fig:calculEtatFutur}
+\end{figure}
+\newpage
+\section{Algorithme de calcul de la probabilité de propagation}
+\label{sec:annexe5}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{lstlisting}
+    public double calculeP(String direction_vent, String saison){
+        // Impact du voisinage sur p.
+        double p = 0.6 + this.nombreDeVoisinsEnFeu() * 0.05;
+        // Impact de la direction du vent sur p.
+        if(!this.feuVersCellule(direction_vent) && direction_vent != null) p -= 0.1;
+        if(this.feuVersCellule(direction_vent)) p += 0.5;
+        // Impact de la saison sur p
+        if(saison == null){}
+        else if(saison.equals("HIVER")) p -= 0.1;
+        else if(saison.equals("ETE")) p += 0.2;
+        // Impact de l'humidité du sol sur p.
+        if(this.solEstHumide()) p -= 0.1;
+        // Impact du type de végétation sur p.
+        if(this.arbreEstPeuInflammable()) p -= 0.2;
+        // La probabilité doit être comprise en 0 et 1.
+        if(p < 0) p = 0;
+        if(p > 1) p = 1;
+        
+        return p;
+    }
+    \end{lstlisting}
+    \caption{Code de la méthode \texttt{Arbre.calculeP()}}
+    \label{fig:calculProbaPropagation}
+\end{figure}
