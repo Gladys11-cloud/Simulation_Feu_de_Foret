@@ -5,7 +5,7 @@ Dans cette partie, nous allons étudier un cas pratique de simulation graphique 
 \subsection{Modélisation mathématique du problème}
 \label{sec:modélisationMath}
 
-La modélisation mathématique du problème de propagation du feu dans une forêt est une étape importante pour comprendre les mécanismes sous-jacents et pour prédire l'évolution de l'incendie. Cette partie vise à décrire la modélisation mathématique que nous avons utilisée pour simuler la propagation du feu dans notre système. Nous avons utilisé une approche basée sur une grille de cellules où chaque cellule peut avoir trois états différents : \textit{sol nu}, \textit{arbre vivant} et \textit{arbre en feu}. Nous avons également défini des règles de propagation qui prennent en compte différents facteurs tels que le \textit{voisinage}, la \textit{direction du vent}, la \textit{saison}, l'\textit{humidité du sol} et le \textit{type de végétation}. Nous avons implémenté ces règles dans un modèle mathématique qui nous permet de simuler la propagation du feu dans la forêt et d'étudier les effets de chaque facteur sur la propagation de l'incendie. 
+La modélisation mathématique est une étape importante pour comprendre les mécanismes de la propagation du feu dans une forêt et prédire son évolution. Nous avons utilisé une grille de cellules pour représenter la forêt, où chaque cellule peut avoir trois états : sol nu, arbre vivant et arbre en feu. Nous avons défini des règles de propagation qui prennent en compte divers facteurs tels que le {\it voisinage}, la {\it direction du vent}, la {\it saison}, l'{\it humidité du sol} et le {\it type de végétation}. Ces règles ont été implémentées dans un modèle mathématique qui nous permet de simuler la propagation du feu dans la forêt et d'étudier les effets de chaque facteur sur la propagation de l'incendie.
 
 La modélisation de la forêt a été effectuée à l'aide d'une grille de taille $n \times n$ contenant $n^2$ cellules. Chaque cellule peut avoir quatre états possibles tels que décrit dans le tableau \ref{tab:typesCellules}. Des règles de propagation ont été établies afin de déterminer l'état futur de chaque cellule en fonction de son état actuel et de l'état de ses voisins. Si la cellule est un arbre en feu, son état futur est "arbre en cendre". Si elle est un arbre vivant et qu'aucun de ses voisins n'est en feu, alors son état futur est le même que son état actuel. Si elle est un arbre vivant et au moins un de ses voisins est en feu, alors sa probabilité de prendre feu est calculée. La probabilité initiale est fixée à $0.6$, ce qui correspond à une probabilité raisonnable pour un incendie de forêt.
 
@@ -35,9 +35,10 @@ Le voisinage de Von Neumann peut avoir un impact significatif sur la simulation 
 
 \subsubsection{Impact de la direction du vent}
 
-L'impact de la direction du vent est un facteur important qui peut influencer la propagation du feu dans la forêt. Dans notre modélisation, nous avons pris en compte la direction du vent pour déterminer la probabilité qu'une cellule vive prenne feu en fonction de ses voisins. La direction du vent peut être définie par rapport à quatre points cardinaux : le nord, le sud, l'est et l'ouest. Si le vent souffle dans la direction opposée à celle d'une cellule en feu, alors la probabilité pour que cette cellule en vie prenne feu diminue. En effet, le vent peut empêcher la propagation du feu en poussant la fumée et les flammes dans la direction opposée. Cependant, si le vent souffle dans la même direction que celle d'une cellule en feu, alors la probabilité pour que cette cellule en vie prenne feu augmente. Le vent peut en effet alimenter le feu en oxygène, augmentant ainsi la probabilité que le feu se propage.
+La direction du vent est un facteur important dans la propagation du feu en forêt. Dans notre modélisation, nous avons pris en compte la direction du vent pour déterminer la probabilité qu'une cellule vive prenne feu en fonction de ses voisins. Le vent peut être défini par rapport aux quatre points cardinaux et peut influencer la propagation du feu de différentes manières. Si le vent souffle dans la direction opposée à celle d'une cellule en feu, la probabilité de propagation diminue car le vent peut empêcher la propagation en poussant la fumée et les flammes dans la direction opposée. En revanche, si le vent souffle dans la même direction que celle d'une cellule en feu, la probabilité de propagation augmente car le vent peut alimenter le feu en oxygène. 
 
-Dans notre modélisation, nous avons déterminé l'impact de la direction du vent en utilisant une valeur binaire $b$ qui indique si le vent pousse le feu vers la cellule en question. Si $b=1$, cela signifie que le vent pousse le feu dans la direction de la cellule en vie, et donc la probabilité que cette cellule prenne feu est augmentée de 0.5. En revanche, si $b=0$, cela signifie que le vent souffle dans une direction opposée à celle de la cellule en vie, et donc la probabilité que cette cellule prenne feu est diminuée de 0.1. La formule \ref{eq:prob_vent} résume l’impact que la direction du vent a sur la probabilité de propagation du feu.
+Dans notre modélisation, nous avons utilisé une valeur binaire pour indiquer si le vent pousse le feu vers la cellule en question. Si la valeur est 1, la probabilité que la cellule prenne feu augmente de 0,5, tandis que si la valeur est 0, la probabilité diminue de 0,1. La formule \ref{eq:prob_vent} résume cet impact.
+
 \begin{equation}
     p = \begin{cases}
     p + 0.5 & \text{si } b = 1 \\
@@ -46,45 +47,33 @@ Dans notre modélisation, nous avons déterminé l'impact de la direction du ven
     \label{eq:prob_vent}
 \end{equation}
 
-Notons que l'utilisateur peut également décider d'ignorer l'impact du vent en choisissant \textit{INDIFFERENT} comme direction du vent. Dans ce cas, la probabilité pour qu'une cellule en vie prenne feu sera déterminée uniquement en fonction de l'état de ses voisins, sans tenir compte de la direction du vent.
+L'utilisateur peut choisir \textit{INDIFFERENT} comme direction du vent pour ignorer son impact. Dans ce cas, la probabilité de propagation dépendra uniquement de l'état des voisins de la cellule en question, sans considérer la direction du vent. 
 
-En conclusion, l'impact de la direction du vent est un facteur important à prendre en compte pour modéliser la propagation du feu dans la forêt. Dans notre modélisation, nous avons intégré cet impact en augmentant ou diminuant la probabilité qu'une cellule en vie prenne feu en fonction de la direction du vent et de la position des cellules en feu. Cela permet de créer une simulation plus réaliste.
+En somme, la direction du vent est un facteur important à prendre en compte pour modéliser la propagation du feu dans la forêt, et nous avons tenu compte de cet impact dans notre modèle en ajustant la probabilité de propagation en fonction de la direction du vent et de la position des cellules en feu, créant ainsi une simulation plus réaliste.
 
 \subsubsection{ Impact du climat}
 
-Les saisons ont un impact important sur la propagation des feux de forêt. En effet, les variations de température et d'humidité peuvent changer considérablement la probabilité de propagation d'un feu dans une forêt. Dans notre modèle, nous avons donc décidé d'intégrer cet impact en modifiant la probabilité initiale pour chaque cellule.
-Tout d'abord, en hiver, les températures sont basses et l'humidité est souvent plus élevée, ce qui réduit la probabilité qu'un feu se propage. Ainsi, nous avons choisi de diminuer la probabilité initiale de prendre feu de 10\% pour les arbres pendant cette saison (voir formule \ref{eq:prob_climat1}).
-\begin{equation}
-    p = p - 0.1
-    \label{eq:prob_climat1}
-\end{equation}
+Les saisons ont un impact important sur la propagation des feux de forêt, car les variations de température et d'humidité peuvent considérablement changer la probabilité de propagation d'un feu dans une forêt. 
 
-En été, les températures sont élevées et l'humidité est généralement plus faible, ce qui favorise la propagation des feux. Nous avons donc choisi d'augmenter la probabilité initiale de prendre feu de 20\% pour les arbres pendant cette saison (voir formule \ref{eq:prob_climat1}).
-\begin{equation}
-    p = p + 0.2
-    \label{eq:prob_climat2}
-\end{equation}
+Dans notre modèle, nous avons donc pris en compte cet impact en modifiant la probabilité initiale pour chaque cellule. En hiver, la probabilité initiale de prendre feu a été réduite de 10\% pour les arbres, car les températures sont basses et l'humidité est souvent plus élevée. En été, la probabilité initiale de prendre feu a été augmentée de 20\% pour les arbres, car les températures sont élevées et l'humidité est généralement plus faible. Pour le printemps et l'automne, nous avons considéré que les conditions étaient relativement neutres et n'avaient donc pas d'impact significatif sur la probabilité de propagation d'un feu. 
 
-Pour le printemps et l'automne, nous avons considéré que les conditions étaient relativement neutres et n'avaient donc pas d'impact significatif sur la probabilité de propagation d'un feu. Nous avons donc gardé la probabilité initiale de prendre feu inchangée pour ces deux saisons.
-
-En intégrant l'impact des saisons sur la probabilité initiale de prendre feu, nous avons pu rendre notre modèle plus réaliste et plus adapté à la réalité de la propagation des feux de forêt dans différentes conditions météorologiques. Cela permet également d'explorer différents scénarios pour les feux de forêt dans différentes saisons, ce qui peut être utile pour la planification des mesures de prévention et de lutte contre les feux de forêt.
+En incluant l'impact des saisons sur la probabilité initiale de prendre feu, notre modèle est plus réaliste et peut être utilisé pour explorer différents scénarios pour les feux de forêt dans différentes saisons, ce qui est utile pour la planification des mesures de prévention et de lutte contre les feux de forêt.
 
 \subsubsection{Impact de l’humidité du sol}
 
-L'humidité du sol joue également un rôle important dans la propagation des incendies de forêt. En effet, un sol humide peut aider à ralentir ou même à éteindre les flammes. Cela est dû au fait que l'eau est un excellent conducteur de la chaleur et qu'elle peut absorber une grande quantité de chaleur avant de s'évaporer. Par conséquent, un sol humide peut aider à réduire la température autour d'un arbre en feu et ainsi ralentir la propagation du feu.
+L'humidité du sol peut ralentir ou éteindre les incendies de forêt, car l'eau absorbe la chaleur et réduit la température autour des arbres en feu.
 
-Dans notre modèle, nous avons intégré cet effet en réduisant la probabilité qu'un arbre prenne feu lorsque le sol est humide. Plus précisément, lorsque la cellule est humide ou encore lorsque le sol sur lequel est placé l’arbre est humide, la probabilité initiale de prendre feu est réduite de 0,1. Cela signifie que même si un arbre a des voisins en feu et que les autres facteurs négatifs ont été pris en compte, la probabilité qu'il prenne feu sera réduite de 0,1 si le sol est humide.
-Cet effet peut avoir un impact significatif sur la propagation des incendies de forêt. Par exemple, si une zone a connu de fortes pluies et que le sol est humide, cela peut aider à ralentir la propagation des flammes en réduisant la probabilité qu'un arbre prenne feu. En revanche, si une zone est en proie à une sécheresse prolongée et que le sol est sec, cela peut aggraver la propagation des incendies en augmentant la probabilité qu'un arbre prenne feu.
+Dans notre modèle, nous avons réduit la probabilité qu'un arbre prenne feu lorsque le sol est humide. Cela peut avoir un impact significatif sur la propagation des incendies, en fonction des conditions météorologiques et environnementales locales. Si le sol est humide, cela peut aider à ralentir la propagation des flammes, tandis que si le sol est sec, cela peut aggraver la situation. 
 
-En conclusion, l'humidité du sol est un facteur important à prendre en compte dans la modélisation des incendies de forêt, car elle peut avoir un impact significatif sur la propagation des flammes. En intégrant cet effet dans notre modèle, nous avons pu mieux simuler la propagation des incendies en fonction des conditions météorologiques et environnementales locales.
+En conclusion, l'humidité du sol doit être prise en compte dans la modélisation des incendies de forêt pour mieux simuler leur propagation.
 
 \subsubsection{Type de végétation}
 
-Le type de végétation est un autre facteur important qui peut affecter la propagation du feu dans une forêt. Certaines espèces d'arbres sont plus résistantes au feu que d'autres. Par exemple, les conifères, comme les pins et les sapins, ont tendance à brûler plus facilement que les feuillus comme les chênes et les érables. Les arbres qui ont une écorce épaisse et résistante sont également moins vulnérables aux flammes que ceux dont l'écorce est fine. Dans notre modèle, nous avons introduit une variable booléenne \textit{arbre peu inflammable} pour représenter la résistance au feu des arbres. Si cette variable est vraie, alors la probabilité pour qu'un arbre prenne feu est réduite. Nous avons fixé une valeur de -0,2 à cette probabilité, ce qui signifie qu'un arbre peu inflammable a 20\% de chances en moins de prendre feu qu'un arbre ordinaire.
+Le type de végétation est un facteur important qui peut affecter la propagation du feu dans une forêt. Certaines espèces d'arbres sont plus résistantes au feu que d'autres, par exemple les conifères sont plus inflammables que les feuillus. 
 
-L'impact du type de végétation sur la propagation du feu peut varier considérablement selon l'environnement et les conditions météorologiques. Les arbres qui poussent dans des zones humides ou qui ont accès à des sources d'eau souterraines sont souvent plus résistants aux incendies que ceux qui poussent dans des régions arides ou soumises à une sécheresse prolongée. Dans notre modèle, nous avons également tenu compte de l'humidité du sol pour refléter cet impact potentiel.
+Dans notre modèle, nous avons ajouté une variable booléenne \textit{arbre peu inflammable} pour représenter la résistance au feu des arbres. Si cette variable est vraie, alors la probabilité de propagation du feu est réduite de 20\%. Nous avons également pris en compte l'impact de l'humidité du sol sur la résistance au feu des arbres, car les arbres dans des zones humides ou avec un accès à de l'eau souterraine sont souvent plus résistants aux incendies que ceux dans des régions arides. 
 
-En somme, le choix du type de végétation peut jouer un rôle crucial dans la propagation du feu dans une forêt. En modifiant la résistance au feu des arbres, nous pouvons simuler différents types de forêts et étudier leur comportement face aux incendies. Cela permettra de mieux comprendre comment la composition de la forêt affecte la probabilité de propagation du feu et aidera à élaborer des stratégies de prévention et de lutte contre les incendies.
+En modifiant la résistance au feu des arbres, notre modèle peut simuler différents types de forêts et étudier leur comportement face aux incendies, ce qui aidera à élaborer des stratégies de prévention et de lutte contre les incendies.
 
 \subsection{Gestion de projet}
 
@@ -98,9 +87,7 @@ Le diagramme de Gantt est un outil de gestion de projet utilisé pour planifier 
 
 \subsubsection{Trello}
 
-Trello est un outil de gestion de projet basé sur des tableaux kanban. Il permet de créer des listes de tâches, des cartes pour chaque tâche, et des étiquettes pour classer les tâches. Nous avons utilisé Trello pour suivre les tâches quotidiennes, affecter des membres de l'équipe à des tâches spécifiques, et pour garder une trace des progrès de chaque tâche. Cela nous a permis de nous concentrer sur les tâches les plus importantes et de les terminer rapidement. Nous avons également pu ajouter des commentaires et des notes pour que chaque membre de l'équipe reste informé de l'avancement du projet. La figure \ref{fig:TableauTrello} présente une capture ponctuelle de notre tableau Trello présentant les différentes tâches ainsi que leurs statuts.
-
-\image{assets/images/Tableau_Trello.jpg}{Diagramme de Gantt du projet}{TableauTrello}{1}
+Trello est un outil de gestion de projet avec des tableaux kanban. Il permet de créer des listes de tâches, des cartes pour chaque tâche, et des étiquettes pour classer les tâches. Nous avons utilisé Trello pour suivre les tâches quotidiennes et garder une trace des progrès. Nous avons pu ajouter des commentaires et des notes pour que chaque membre de l'équipe reste informé de l'avancement. Voici une capture d'écran de notre tableau Trello montrant les différentes tâches et leurs statuts.
 
 \subsubsection{Git}
 
@@ -119,109 +106,57 @@ La figure \ref{fig:BranchesGit} présente une représentation graphique de la st
 
 \subsubsection{Méthodologie Agile}
 
-Nous avons opté pour la méthodologie agile dans la gestion de notre projet de modélisation d'incendie de forêt. Cette méthode de gestion de projet est basée sur des itérations courtes appelées sprints, qui durent généralement entre une et quatre semaines. Chaque sprint a un objectif spécifique et des tâches sont assignées aux membres de l'équipe pour atteindre cet objectif. Cette méthode a plusieurs avantages par rapport aux méthodes de gestion de projet traditionnelles.
+Nous avons utilisé la méthodologie agile pour gérer notre projet de modélisation d'incendie de forêt. 
 
-Tout d'abord, l'approche agile permet une collaboration étroite entre les membres de l'équipe et les parties prenantes du projet. Les parties prenantes sont impliquées dès le début du projet et peuvent donner leur avis sur les priorités et les fonctionnalités à inclure dans chaque sprint. Cela signifie que les membres de l'équipe peuvent répondre rapidement aux changements de priorités ou aux commentaires des parties prenantes, ce qui garantit que le projet reste aligné sur les objectifs de l'entreprise. Ensuite, l'approche agile permet une meilleure visibilité sur la progression du projet. Les sprints sont divisés en tâches plus petites et plus gérables, ce qui signifie que l'équipe peut suivre de près l'avancement du projet et savoir exactement où en est chaque tâche. Cela permet à l'équipe de réagir rapidement en cas de retard ou de problème dans une tâche, ce qui minimise les risques pour le projet dans son ensemble. Enfin, l'approche agile encourage l'itération et l'amélioration continue. Après chaque sprint, l'équipe peut prendre en compte les commentaires des parties prenantes et les leçons apprises pendant le sprint pour améliorer le projet dans le prochain sprint. Cette approche itérative permet une adaptation continue du projet, ce qui garantit que le résultat final est le plus proche possible des besoins et des attentes des parties prenantes.
+Cette méthode implique des itérations courtes appelées sprints, qui durent entre une et quatre semaines. Chaque sprint a un objectif spécifique et des tâches sont assignées aux membres de l'équipe pour atteindre cet objectif.
 
-Pour faciliter la gestion de notre projet agile, nous avons utilisé plusieurs outils. Le diagramme de Gantt a été utilisé pour planifier les sprints et les tâches associées, en visualisant la durée et les dépendances entre les tâches. Trello a été utilisé pour suivre l'état de chaque tâche et de chaque sprint, permettant ainsi à l'équipe de savoir exactement où en est chaque tâche et de faciliter la collaboration entre les membres de l'équipe. Git a été utilisé pour gérer le code source de notre projet, ce qui a permis à l'équipe de travailler simultanément sur différentes parties du code et de suivre les modifications apportées au code.
-
-En somme, la méthodologie agile s'est avérée très utile dans la gestion de notre projet de modélisation d'incendie de forêt. Elle nous a permis de travailler de manière collaborative, de suivre de près l'avancement du projet et de faire des améliorations continues pour répondre aux besoins qui ont évolués au fil du temps. Les outils que nous avons utilisés, comme le \textit{diagramme de Gantt}, \textit{Trello} et \textit{Git}, ont permis à l'équipe de travailler de manière efficace et coordonnée. L'utilisation de ces outils a grandement amélioré notre efficacité en tant qu'équipe.
+Cette méthode permet une collaboration étroite avec les parties prenantes, une meilleure visibilité sur la progression du projet et encourage l'amélioration continue. En fin de compte, la méthodologie agile a grandement amélioré notre efficacité en tant qu'équipe.
 
 \subsection{Modélisation informatique du problème}
 
 La modélisation informatique est une étape cruciale dans la conception d'un logiciel. Elle permet de représenter les différentes composantes du système ainsi que les interactions entre elles. Dans ce projet, nous avons utilisé le diagramme de classe de l'UML pour modéliser notre système de simulation de feu de forêt. Ce diagramme nous a permis de visualiser les différentes classes du système, les relations entre elles ainsi que les attributs et les méthodes de chaque classe. De plus, cette modélisation nous a permis de mieux comprendre le fonctionnement de notre système et ainsi de faciliter la phase d'implémentation.
 
-\subsubsection{Construction de la version initiale du diagramme de classes}
+\subsubsection{Construction et amélioration du diagramme de classes}
 
-La construction du diagramme de classe UML est une des stratégies les plus répandues de modélisation informatique d’un projet. Dans notre cas, la modélisation de la simulation d'incendie de forêt ne faisait pas exception. Afin de se partager les tâches et que chacun puisse visualiser la structure du projet, nous avons décidé de travailler individuellement sur des diagrammes de classes distincts. L'idée était de mettre en place chacun une représentation personnelle du projet tel que nous le visualisions. L'objectif était ensuite de récupérer les meilleures idées et de les intégrer pour réaliser le diagramme final. 
+La construction du diagramme de classe UML a été une étape importante pour modéliser notre projet de simulation d'incendie de forêt. Chacun des membres de l'équipe a travaillé sur un diagramme de classes individuel pour représenter sa vision du projet. Après discussion et prise en compte des meilleures idées, nous avons sélectionné la version initiale du diagramme de classes qui était la plus complète et intuitive. Cette version initiale a servi de base pour l'implémentation de notre programme.
 
-Au cours de cette phase de modélisation, nous avons passé beaucoup de temps à discuter de la structure et de l'organisation du projet. Nous avons tous apporté des idées et des suggestions pour améliorer le modèle. Nous avons également cherché à intégrer toutes les fonctionnalités du projet, en nous appuyant sur les bonnes pratiques de la modélisation orientée objet. En annexe [lien vers annexe] à ce rapport, nous présentons quelques-uns des diagrammes de classes proposés par l’équipe.
+Cependant, nous avons réalisé qu'il était possible de simplifier le diagramme et de le rendre encore plus efficace en termes de qualité de code. Nous avons donc amélioré le diagramme en prenant en compte les principes SOLID de programmation pour garantir une structure simple et claire. Nous avons regroupé les différentes classes d'arbres en une seule classe avec un attribut état pour simplifier le diagramme.
 
-Finalement, après des entretiens et en prenant en compte le retour de tous les membres d’équipe, nous avons sélectionné le diagramme de classe UML qui était le plus complet et intuitif. Cette version initiale nous a permis d'avoir une représentation claire et précise des différentes classes et de leurs interactions. Elle a également servi de base pour l'implémentation de notre programme de simulation d'incendie de forêt. La figure \ref{fig:umlInitial} présente le diagramme de classes initial sélectionné par l’équipe.
+La version finale du diagramme de classes a été adoptée par l'équipe pour obtenir une structure plus simple et claire pour le projet. Cela nous a permis d'obtenir un code plus facile à comprendre et à implémenter.
 
-\image{assets/images/diagramme_de_classes_initial.png}{Diagramme de classes initial sélectionné par l’équipe}{umlInitial}{1}
-
-\subsubsection{Amélioration du diagramme}
-
-L'amélioration du diagramme de classes initial a été une étape importante pour s'assurer de la qualité de notre projet. En effet, le premier diagramme était déjà une bonne base de départ, mais nous avons réalisé qu'il était possible de le simplifier encore plus. Nous avons donc examiné les différentes classes et les relations entre elles, afin de voir où nous pourrions faire des améliorations. L'un des points clés de cette amélioration était de s'assurer que notre implémentation respecte les principes SOLID, qui sont des règles de base en programmation pour assurer une bonne qualité de code. Nous avons donc pris en compte ces principes lors de la révision du diagramme de classes.
-
-Un des choix que nous avons fait pour simplifier le diagramme a été de regrouper les différentes classes d'arbres en une seule classe Arbre, dont l'état est déterminé par un attribut. Cette modification a permis de réduire le nombre de classes nécessaires dans le diagramme, ce qui a rendu le tout plus facile à comprendre et à implémenter. Après discussion et prise en compte des retours de chacun, ce diagramme a été adopté comme version finale.
-
-Cette amélioration du diagramme de classes nous a permis d'obtenir une structure plus simple et plus claire pour notre projet, tout en respectant les principes SOLID. Grace à cela, nous avons abouti à un code plus facile à comprendre et à une implémentation plus efficace. La figure \ref{fig:umlFinal} présente la version finale du diagramme de classes qui a été adopté par l’équipe.
-
-\image{assets/images/version_finale_diagramme_de_classes.png}{Version finale du diagramme de classes}{umlFinal}{1}
+\image{assets/images/version_finale_diagramme_de_classes.png}{Version finale du diagramme de classes}{umlFinal}{0.7}
 
 \subsubsection{Description du diagramme de classes}
 
-Le diagramme de classes final comprend quatre classes principales et deux autres qui en spécialisent une. Ces classes sont les suivantes : \texttt{App}, \texttt{Menu}, \texttt{Grille}, \texttt{Cellule}, \texttt{SolNu} et \texttt{Arbre}. Nous allons expliquer le rôle de chacune de ces classes dans le modèle ainsi que les fonctions remplies par certaines de leurs méthodes.
+Le diagramme de classes final comprend quatre classes principales et deux autres qui en spécialisent une. Ces classes sont les suivantes :
 
-\begin{enumerate}
-    \item Classe \texttt{App}: La classe \texttt{App} est la fenêtre principale du projet, point de départ de l’application. C’est une extension de la classe \texttt{JFrame} de java. Elle contient notamment la méthode \texttt{main} qui permet d’exécuter l’ensemble du programme. Le constructeur de la classe permet de créer la fenêtre de l’application et d’y ajouter la grille de simulation et le menu. Cette classe possède également plusieurs attributs tels que la grille, le menu, la densité des arbres, la direction du vent, la saison, le taux d'arbres peu inflammables, le taux de cellules humides, le taux de forêt déjà brûlée et un booléen qui permet de savoir si l'utilisateur a cliqué sur le bouton \textit{Arrêter}. Elle a également des méthodes qui permettent de générer la grille et de lancer la simulation pour la mettre à jour de façon itérative jusqu’à ce qu’il n’y ait plus de changement dans la grille ou que l’utilisateur clique sur le bouton \textit{Arrêter}.\\
-    
-    \item Classe \texttt{Menu}: La classe Menu est une extension de la classe \texttt{JPanel} de java et contient quant à elle tous les composants graphiques tels que les boutons, les champs de texte et les lignes de séparation qui permettent de configurer la grille et de lancer la simulation. Toutes les interactions de l’utilisateur avec le programme sont prises en charge par cette classe. La classe \texttt{Menu} a des attributs tels que la largeur et la hauteur minimale du panneau, ainsi que des couleurs en hexadécimal pour les boutons et les champs de texte.\\
-    
-    \item Classe \texttt{Grille}: La classe \texttt{Grille} est également une extension de \texttt{JPanel} et permet d'implémenter la grille sur laquelle se déroulera la simulation. Elle a des attributs tels que le nombre de lignes et de colonnes de la grille, ainsi qu'un tableau à deux dimensions contenant toutes les cellules de la grille. Elle a également des méthodes qui permettent de construire la grille et de mettre à jour la grille lors de la simulation. De par sa fonction, elle possède des méthodes utiles permettant d’accéder à une cellule spécifique de la grille, d’en déterminer les voisins et même de la modifier. Notons également que depuis l’interface, l’utilisateur pourra cliquer sur des cellules pour changer leur état et ainsi définir les arbres initialement en feu pour ensuite lancer une simulation.\\
-    
-    \item Classe \texttt{Cellule}: La classe Cellule est une classe abstraite qui étend \texttt{JPanel} et qui représente les différentes composantes de la forêt, telles que le sol nu, l'arbre vivant, l'arbre en feu et l'arbre en cendres. Nous pouvons considérer chaque cellule de la grille comme représentant $1 m^2$ de la forêt. La classe possède une méthode centrale du programme à savoir \texttt{abstract void calculeEtatFutur (String direction\_vent, String saison)}. Cette méthode abstraite est définie par les deux classes concrètes \texttt{SolNu} et \texttt{Arbre} qui héritent de \texttt{Cellule}. C’est une méthode très importante car elle permet de calculer l’état futur d’une cellule en se basant sur plusieurs critères tels que présentés dans la section \ref{sec:modélisationMath}. Plus de détails sur cet algorithme seront donnés dans la section dédiée \ref{sec:calculEtatFutur}.\\
-    
-    \item Classe \texttt{SolNu}: Cette classe hérite de la classe \texttt{Cellule} et permet de modéliser un sol nu, ce qui correspond à une parcelle de terrain sans arbre. Sa méthode principale est \texttt{abstract void calculeEtatFutur (String direction\_vent, String saison)} qu’elle hérite de \texttt{Cellule}. Cependant, la méthode retourne simplement l’état courant de la cellule car un sol nu ne change pas d’état après le passage du feu.\\
-    
-    \item Classe \texttt{Arbre}: Cette classe hérite elle aussi de la classe Cellule. Elle permet de modéliser un arbre. Ses méthodes permettent de construire des arbres ayant des caractéristiques différentes afin de pouvoir observer le comportement du feu faces à divers types de forêts. C’est ainsi que l’utilisateur pourra depuis l’interface graphique décider de l’humidité du sol sur lequel repose les racines de l’arbres, et de l’inflammabilité de l’arbre. Tout comme \texttt{SolNu}, cette classe implémente la méthode \texttt{calculeEtatFutur()} dont le code est présenté dans la section \ref{sec:calculEtatFutur}.\\
-\end{enumerate}
+1. Classe \texttt{App}: Cette classe est la fenêtre principale du projet, point de départ de l’application. Elle contient la grille de simulation et le menu, et gère la simulation. Elle possède plusieurs attributs tels que la grille, le menu, la densité des arbres, la direction du vent, la saison, le taux d'arbres peu inflammables, le taux de cellules humides, le taux de forêt déjà brûlée et un booléen qui permet de savoir si l'utilisateur a cliqué sur le bouton \textit{Arrêter}. Elle a également des méthodes qui permettent de générer la grille et de lancer la simulation de façon itérative jusqu’à ce qu’il n’y ait plus de changement dans la grille ou que l’utilisateur clique sur le bouton \textit{Arrêter}.
+
+2. Classe \texttt{Menu}: Cette classe gère les interactions de l'utilisateur avec l'interface graphique. Elle contient les boutons, les champs de texte et les lignes de séparation qui permettent de configurer la grille et de lancer la simulation. Elle a des attributs tels que la largeur et la hauteur minimale du panneau, ainsi que des couleurs en hexadécimal pour les boutons et les champs de texte.
+
+3. Classe \texttt{Grille}: Cette classe implémente la grille de simulation et permet de la mettre à jour. Elle a des attributs tels que le nombre de lignes et de colonnes de la grille, ainsi qu'un tableau à deux dimensions contenant toutes les cellules de la grille. Elle a également des méthodes qui permettent de construire la grille et de mettre à jour la grille lors de la simulation. Elle possède des méthodes utiles permettant d’accéder à une cellule spécifique de la grille, d’en déterminer les voisins et même de la modifier.
+
+4. Classe \texttt{Cellule}: Cette classe abstraite représente les différentes composantes de la forêt, telles que le sol nu, l'arbre vivant, l'arbre en feu et l'arbre en cendres. Elle a une méthode abstraite, \texttt{calculeEtatFutur()}, qui permet de calculer l'état futur d'une cellule en se basant sur plusieurs critères tels que présentés dans la section \ref{sec:modélisationMath}. Les classes \texttt{SolNu} et \texttt{Arbre} héritent de cette classe.
+
+5. Classe \texttt{SolNu}: Cette classe hérite de la classe \texttt{Cellule} et permet de modéliser un sol nu, qui correspond à une parcelle de terrain sans arbre. Sa méthode principale est \texttt{calculeEtatFutur()}, qui retourne simplement l'état courant de la cellule car un sol nu ne change pas d'état après le passage du feu.
+
+6. Classe \texttt{Arbre}: Cette classe hérite également de la classe \texttt{Cellule} et permet de modéliser un arbre. Ses méthodes permettent de construire des arbres ayant des caractéristiques différentes afin de pouvoir observer le comportement du feu faces à divers types de forêts. Cette classe implémente également la méthode \texttt{calculeEtatFutur()}.
 
 \subsection{Design de l’interface graphique}
 
-Le design de l'interface graphique est une étape phare du développement d'un logiciel car il permet de concevoir visuellement la façon dont les utilisateurs vont interagir avec l'application. Cela permet également de s'assurer que l'interface est intuitive et facile à utiliser, tout en répondant aux besoins de l'utilisateur. Pour notre simulateur d'incendie de forêt, nous avons utilisé l'outil \textit{Figma} pour concevoir l'interface graphique. Cela nous a permis de créer une représentation visuelle de l'application avant même de commencer à coder, ce qui nous a aidé à identifier les fonctionnalités clés et à organiser l'interface de manière logique. La figure \ref{fig:designFigma} présente le design préalable que nous avons réalisé sur \textit{Figma} tandis que la figure \ref{fig:interfaceRélle} présente l’interface effectif qui a été implémenté.
+Le design de l'interface graphique est une étape cruciale du développement d'un logiciel car il permet de concevoir visuellement la façon dont les utilisateurs vont interagir avec l'application. 
 
-\image{assets/images/Proposition_Interface_Graphique_feu_de_foret.png}{Design Figma de l’interface graphique}{designFigma}{0.80}
-\image{assets/images/Interface_Graphique_Implémentée.jpg}{Interface graphique réellement implémenté}{interfaceRélle}{1}
+Pour notre simulateur d'incendie de forêt, nous avons utilisé l'outil \textit{Figma} pour concevoir l'interface graphique. La grille représente la forêt et est subdivisée en cellules, chacune représentant un arbre ou un sol nu. Le menu de configuration est subdivisé en quatre parties principales, permettant à l'utilisateur de configurer la forêt, les facteurs externes, et la simulation. L'interface graphique est conçue de manière claire et logique, ce qui permet à l'utilisateur de comprendre rapidement les différentes fonctionnalités et de les utiliser efficacement. 
 
-L'interface graphique est composée de deux parties principales : la grille qui représente la forêt à gauche, et le menu de configuration à droite.
-
-La grille représente la forêt et est subdivisée en cellules, chacune représentant un arbre ou un sol nu. L'utilisateur peut modifier l'état d'une cellule en cliquant dessus plusieurs fois. Les arbres vivants peuvent également être modifiés en faisant un clic droit pour indiquer s'ils se trouvent sur un sol humide et/ou s'ils sont inflammables.
-
-Le menu de configuration est subdivisé en quatre parties principales. La première partie permet à l'utilisateur de configurer la forêt en indiquant le nombre de lignes et de colonnes, la densité de la forêt, le taux d'arbres sur sol humide et le taux d'arbres peu inflammables souhaité dans la forêt. Un bouton générer permet d'appliquer cette configuration sur la grille.
-
-La deuxième partie permet de configurer les facteurs externes tels que la direction du vent et la saison. Ces paramètres peuvent influencer la propagation de l'incendie et permettent aux utilisateurs de voir comment les changements externes peuvent affecter la simulation.
-
-La troisième partie contient deux boutons qui permettent de lancer et d'arrêter la simulation. Ces boutons sont facilement accessibles pour que l'utilisateur puisse commencer ou mettre en pause la simulation rapidement.
-
-La quatrième et dernière partie contient le pourcentage de forêt déjà brûlée ainsi qu'une légende expliquant les différentes couleurs dans la grille. Cette partie permet à l'utilisateur de suivre l'état de la simulation et de comprendre ce que chaque couleur représente dans la grille.
-
-En résumé, le design de l'interface graphique est une étape importante dans le développement de tout logiciel, car il permet de concevoir visuellement la façon dont les utilisateurs vont interagir avec l'application. Dans le cas de notre simulateur de feu de forêt, l'interface graphique est composée d'une grille représentant la forêt et d'un menu de configuration permettant à l'utilisateur de modifier différents paramètres. La conception claire et logique de l'interface permet à l'utilisateur de comprendre rapidement les différentes fonctionnalités et de les utiliser efficacement.
+La figure \ref{fig:designFigma} présente le design préalable tandis que la figure \ref{fig:interfaceRélle} présente l'interface effectivement implémentée.
 
 \subsection{Mise en œuvre de la solution à l’aide du langage Java}
 
-Cette partie présente trois algorithmes essentiels pour le bon fonctionnement de la simulation. Parmi ceux-ci, nous retrouvons l'algorithme de la boucle de simulation qui permet d'itérer sur chaque cellule de la grille afin de déterminer l'état futur de celle-ci. De plus, l'algorithme de calcul de l'état futur d'une cellule et l'algorithme de calcul de la probabilité de propagation du feu sur une cellule sont également des algorithmes clés dans notre simulateur. Dans cette partie, nous allons décrire de manière détaillée ces algorithmes pour mieux comprendre leur fonctionnement et leur rôle dans la simulation.
+Cette partie présente trois algorithmes essentiels pour le bon fonctionnement de la simulation : la boucle de simulation, le calcul de l'état futur d'une cellule et le calcul de la probabilité de propagation du feu sur une cellule. Nous allons décrire ces algorithmes en détail pour mieux comprendre leur fonctionnement et leur rôle dans la simulation.
 
 \subsubsection{Algorithme de la boucle de simulation}
 
 L'algorithme de la boucle de simulation de la figure \ref{fig:boucleSimulation} est l'un des éléments clés de la solution. Cet algorithme est responsable de parcourir toutes les cellules de la grille et de calculer leur état futur en fonction de la direction du vent et de la saison. La méthode renvoie un tableau de deux entiers, le premier étant 0 si la simulation doit s'arrêter (s'il n'y a plus d'arbres en feu) et 1 sinon. Le deuxième entier représente le pourcentage de la forêt déjà brûlée.
-
-\begin{figure}[htbp]
-    \centering
-    \begin{lstlisting}
-    public double[] simulation(String direction_vent, String saison){
-        double continuerSimulation = 0;
-        double nombreTotalArbre = 0;
-        double nombreArbreEnCendre = 0;
-
-        for(int i = 0; i < this.nb_lignes; i++) {
-            for( int j = 0; j < this.nb_colonnes; j++) {
-                Cellule cellule = this.getCellule(i, j);
-                cellule.calculeEtatFutur(direction_vent, saison);
-                if(cellule.getEtatFutur() == 2) continuerSimulation = 1;
-                if(cellule.getEtat() == 1 || cellule.getEtat() == 2 || cellule.getEtat() == 3) nombreTotalArbre += 1;
-                if(cellule.getEtat() == 3 || cellule.getEtatFutur() == 3) nombreArbreEnCendre += 1;
-            }
-        }
-
-        return new double[]{continuerSimulation, ((nombreArbreEnCendre/nombreTotalArbre)*100)};
-    }
-    \end{lstlisting}
-    \caption{Code de la méthode \texttt{Grille.simulation()}}
-    \label{fig:boucleSimulation}
-\end{figure}
 
 La boucle de simulation commence par initialiser trois variables : continuerSimulation, nombreTotalArbre et nombreArbreEnCendre. La variable continuerSimulation est initialement à 0, mais elle sera mise à 1 si une cellule en feu est trouvée. Les variables nombreTotalArbre et nombreArbreEnCendre sont utilisées pour calculer le pourcentage de la forêt déjà brûlée. La boucle itère ensuite sur toutes les cellules de la grille. Pour chaque cellule, la méthode calculeEtatFutur est appelée, ce qui calcule l'état futur de la cellule en fonction de la direction du vent et de la saison. Si l'état futur de la cellule est 2 (en feu), la variable continuerSimulation est mise à 1. Enfin, les variables nombreTotalArbre et nombreArbreEnCendre sont mises à jour en fonction de l'état actuel et futur de la cellule. Le pourcentage de la forêt déjà brûlée est calculé en divisant le nombre d'arbres en cendres par le nombre total d'arbres et en multipliant par 100. Le tableau de deux entiers est ensuite retourné.
 
@@ -232,63 +167,11 @@ L'algorithme de la boucle de simulation est un élément essentiel de la solutio
 
 Cette méthode visible sur la figure \ref{fig:calculEtatFutur} utilise plusieurs critères pour déterminer l'état futur d'une cellule : le voisinage, la direction du vent, la saison, l'humidité du sol et le type de végétation.
 
-\begin{figure}[htbp]
-    \centering
-    \begin{lstlisting}
-    @Override
-    public void calculeEtatFutur(String direction_vent, String saison){
-        // p : probabilité de propagation du feu vers la cellule
-        double p;
-
-        if(this.etat == 3) this.etat_futur = etat;
-        else if(this.etat == 2) this.etat_futur = 3;
-        else if(this.etat == 1){
-            if(this.nombreDeVoisinsEnFeu() == 0) this.etat_futur = this.etat;
-            else{
-                p = this.calculeP(direction_vent, saison);
-                if(this.feuVaSePropager(p)) this.etat_futur = 2;
-                else this.etat_futur = etat;
-            }
-        }
-    }
-    \end{lstlisting}
-    \caption{Code de la méthode \texttt{Arbre.calculeEtatFutur()}}
-    \label{fig:calculEtatFutur}
-\end{figure}
-
 Tout d'abord, si la cellule est un arbre déjà en cendre, son état futur reste le même. Si la cellule est un arbre en feu, son état futur est défini comme étant en cendre. Si la cellule est un arbre vivant et qu'aucun de ses voisins n'est en feu, elle reste dans son état actuel. Cependant, si la cellule est un arbre vivant et qu'au moins un de ses voisins est en feu, un calcul de probabilité est effectué pour déterminer si le feu va se propager à cette cellule. La probabilité de propagation du feu vers la cellule est calculée à l'aide de la méthode \texttt{calculeP()} qui prend en compte la direction du vent, la saison, l'humidité du sol et le type de végétation. Cette probabilité est ensuite utilisée pour faire passer le cas échéant la cellule à l'état en feu.
 
 \subsubsection{Algorithme de calcul de la probabilité de propagation}
 
 L'algorithme de calcul de la probabilité de propagation du feu présenté sur la figure \ref{fig:calculProbaPropagation} est relativement simple. La méthode prend en entrée la direction du vent et la saison courante et calcule la probabilité que l'arbre prenne feu en se basant sur plusieurs critères.
-
-\begin{figure}[htbp]
-    \centering
-    \begin{lstlisting}
-    public double calculeP(String direction_vent, String saison){
-        // Impact du voisinage sur p.
-        double p = 0.6 + this.nombreDeVoisinsEnFeu() * 0.05;
-        // Impact de la direction du vent sur p.
-        if(!this.feuVersCellule(direction_vent) && direction_vent != null) p -= 0.1;
-        if(this.feuVersCellule(direction_vent)) p += 0.5;
-        // Impact de la saison sur p
-        if(saison == null){}
-        else if(saison.equals("HIVER")) p -= 0.1;
-        else if(saison.equals("ETE")) p += 0.2;
-        // Impact de l'humidité du sol sur p.
-        if(this.solEstHumide()) p -= 0.1;
-        // Impact du type de végétation sur p.
-        if(this.arbreEstPeuInflammable()) p -= 0.2;
-        // La probabilité doit être comprise en 0 et 1.
-        if(p < 0) p = 0;
-        if(p > 1) p = 1;
-        
-        return p;
-    }
-    \end{lstlisting}
-    \caption{Code de la méthode \texttt{Arbre.calculeP()}}
-    \label{fig:calculProbaPropagation}
-\end{figure}
 
 Tout d'abord, la méthode prend en compte l'impact du voisinage sur la probabilité \textit{p}. Si plusieurs cellules voisines sont en feu, alors la probabilité que l'arbre prenne feu sera plus grande. Ainsi, pour chaque voisin en feu, la probabilité p est augmentée de 0.05. Ensuite, la méthode prend en compte l'impact de la direction du vent sur la probabilité p. Si le vent souffle dans la direction de la cellule, la probabilité que l'arbre prenne feu sera plus grande. Ainsi, si le vent souffle dans la direction de la cellule, la probabilité p est augmentée de 0.5. Si le vent souffle dans une autre direction, la probabilité p est diminuée de 0.1.
 
